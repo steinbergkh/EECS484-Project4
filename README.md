@@ -1,7 +1,3 @@
-EECS484-Project4
+EECS 484 -- Project 4
 ================
-- [ ] a task list item
-- [ ] list syntax required
-- [ ] normal **formatting**, @mentions, #1234 refs
-- [ ] incomplete
-- [x] completed
+##Minirel 2000 Query Processor
