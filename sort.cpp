@@ -89,10 +89,10 @@ static int stringcmp(const void* p1, const void* p2)
 // sub-run can hold (usually derived from amount of memory available).
 // Status code is returned in variable status.
 
-SortedFile::SortedFile(const string & fileName, 
+SortedFile::SortedFile(const string & fileName,
 		       int offset, int len, Datatype type,
 		       int maxItems, Status& status)
-      : fileName(fileName), type(type), offset(offset), 
+      : fileName(fileName), type(type), offset(offset),
 	length(len), maxItems(maxItems)
 {
   // Check incoming parameters.
@@ -103,8 +103,8 @@ SortedFile::SortedFile(const string & fileName,
     status = BADSORTPARM;
   else if (type != STRING && type != INTEGER && type != DOUBLE)
     status = BADSORTPARM;
-  else if (type == INTEGER && len != sizeof(int)
-	   || type == DOUBLE && len != sizeof(double))
+  else if ((type == INTEGER && len != sizeof(int))
+	   || (type == DOUBLE && len != sizeof(double)))
     status = BADSORTPARM;
 
   if (status != OK)
@@ -117,7 +117,7 @@ SortedFile::SortedFile(const string & fileName,
     status = INSUFMEM;
     return;
   }
-    
+
   status = sortFile();
 }
 
@@ -171,7 +171,7 @@ Status SortedFile::sortFile()
       memcpy(buffer[numItems].field, (char *)rec.data + offset, length);
       buffer[numItems].length = length;
     }
-    
+
     // If at least 1 record in sub-run, sort records and write out
     // to temporary file.
 
@@ -233,7 +233,7 @@ Status SortedFile::generateRun(int items)
   ostringstream outputString;
   outputString << fileName << ".sort." << runs.size() << ends;
   run.name = outputString.str();
-  /* 
+  /*
   char *tmpString = outputString.str();
   run.name = string(tmpString);
   delete [] tmpString;
@@ -384,7 +384,7 @@ Status SortedFile::next(Record & rec)
         foundSmallest = true;
       }
     }
-  
+
   if (!foundSmallest)                     // no next record found?
     return FILEEOF;
 
@@ -480,7 +480,7 @@ SortedFile::~SortedFile()
   for(unsigned int i = 0; i < runs.size(); i++) {
     delete runs[i].file;
     (void)db.destroyFile(runs[i].name);
-  }   
+  }
 
   delete [] buffer;
 }

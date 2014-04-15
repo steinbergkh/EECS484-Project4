@@ -7,29 +7,29 @@
 
 #define MAX(a,b) ((a) > (b) ? (a) : (b))
 
-// Constructor for the Index class. The arguments passed in are 
+// Constructor for the Index class. The arguments passed in are
 //     'name' -- file name of the relation
 //     'offset', 'length', 'type' -- describing the attribute indexed
 //     'unique' -- flag for enforcing uniquess of the entries
 
-Index::Index(const string & name, 
-	     const int offset, 
-	     const int length, 
-	     const Datatype type, 
-	     const int unique, 
+Index::Index(const string & name,
+	     const int offset,
+	     const int length,
+	     const Datatype type,
+	     const int unique,
 	     Status& status)
 {
   Page* pagePtr;
   file = 0;
 
   // For this assignment turn off hash indices on strings
-  if (type == STRING ) 
+  if (type == STRING )
   {
      status = NOCHARIDX;
      return;
   }
-   
-   
+
+
   if(name.empty()) {
     status = BADFILE;
     return;
@@ -43,8 +43,8 @@ Index::Index(const string & name,
     status = BADINDEXPARM;
     return;
   }
-  if (type == INTEGER && length != sizeof(int)
-      || type == DOUBLE && length != sizeof(double)) {
+  if ((type == INTEGER && length != sizeof(int))
+      || (type == DOUBLE && length != sizeof(double))) {
     status = BADINDEXPARM;
     return;
   }
@@ -63,8 +63,8 @@ Index::Index(const string & name,
   outputString << name << '.' << offset << ends;
   string indexName(outputString.str());
 
-  // The constructor runs in two cases. In the first case, an index 
-  // doesn't exist as detected by db.openFile. The relation file 
+  // The constructor runs in two cases. In the first case, an index
+  // doesn't exist as detected by db.openFile. The relation file
   // should be scanned and each tuple is inserted to the index. In
   // the second case, an index already exists. Only the headerPage
   // needs to read in and pinned down in the buffer pool.
@@ -111,7 +111,7 @@ Index::Index(const string & name,
 
     // build index by scanning the relation file and inserting every
     // tuple
-    
+
     HeapFileScan heapFileScan(name, offset, length, type, NULL, EQ, status);
 
     if (status != OK)
@@ -138,13 +138,13 @@ Index::Index(const string & name,
   else  { // file already exists.  get header page into the buffer pool
 
     status = file->getFirstPage(headerPageNo);
-    if (status != OK) 
+    if (status != OK)
       {
 	cerr << "fetch of first page failed\n";
         return;
       }
     status = bufMgr->readPage(file, headerPageNo, pagePtr);
-    if (status != OK) 
+    if (status != OK)
       {
 	cerr << "read of first page failed\n";
 	return;
@@ -157,7 +157,7 @@ Index::Index(const string & name,
 Index::~Index() {
 
   // if file pointer is not set then simply return.
-  if (!file) return; 
+  if (!file) return;
 
   Status status = bufMgr->unPinPage(file, headerPageNo, true);
   if (status != OK)
@@ -170,7 +170,7 @@ Index::~Index() {
   status = db.closeFile(file);
 }
 
-// return a hashvalue hashed from the attribute 'value' according to 
+// return a hashvalue hashed from the attribute 'value' according to
 // the current depth of the directory
 
 const Status Index::hashIndex(const void *attr, int& hashvalue)
@@ -182,11 +182,11 @@ const Status Index::hashIndex(const void *attr, int& hashvalue)
     {
        case STRING:
             {
-               // For strings "add" the values of the characters, stopping 
+               // For strings "add" the values of the characters, stopping
                // at the first character that is 0
                index = value[0];
-               for (int i = 1; i < headerPage->length; i++) 
-                   if (!value[i]) 
+               for (int i = 1; i < headerPage->length; i++)
+                   if (!value[i])
                       index += value[i];
                    else break;
             }
@@ -202,30 +202,30 @@ const Status Index::hashIndex(const void *attr, int& hashvalue)
             // copy the integer value to avoid byte-alignment errors.
             memcpy (&index, value, sizeof(int));
             break;
-       default: 
+       default:
             return BADINDEXPARM;
     }
 
     // hashvalue is the lower bits of 'index'. Number of bits is determined
     // by the depth of the directory
 
-    index=abs(index);   
+    index=abs(index);
     int mask = 1 << headerPage->depth;
     hashvalue = index % mask;
 
     return OK;
   }
 
-// Insert an <attribute, rid> pair into the index. Return OK if the 
+// Insert an <attribute, rid> pair into the index. Return OK if the
 // entry is inserted and DIROVERFLOW if the directory isn't large
 // enough to hold the indices.
 
-const Status Index::insertEntry(const void *value, RID rid) 
-{ 
+const Status Index::insertEntry(const void *value, RID rid)
+{
   Bucket* bucket;
   Status status;
   Bucket *newBucket;
-  int newPageNo;       
+  int newPageNo;
   char  data[PAGESIZE*2];
   int counter;
   int index;
@@ -240,33 +240,33 @@ const Status Index::insertEntry(const void *value, RID rid)
       return status;
     while ((status = scanNext(outRid)) != NOMORERECS) {
       if (status != OK)
-	return status;    
+	return status;
       if (!memcmp(&outRid, &rid, sizeof(RID)))
 	return NONUNIQUEENTRY;
     }
     if((status = endScan()) != OK)
       return status;
   }
- 
+
   // Get the bucket containing the entry into buffer pool
   status = hashIndex(value, index);
   int pageNo = headerPage->dir[index];
 
 #ifdef DEBUGIND
-  cout << "Inserting entry " << *(int*)value << " to bucket " 
+  cout << "Inserting entry " << *(int*)value << " to bucket "
     << pageNo << endl;
-#endif 
- 
+#endif
+
   status = bufMgr->readPage(file, pageNo, (Page*&)bucket);
-  if (status != OK) 
+  if (status != OK)
     return status;
 
   // the bucket needs to be splitted if the number of entries
   // on the bucket equals the maximum
   if (bucket->slotCnt == numSlots) { // splitting bucket
-    
+
     // allocate a new bucket
-    status = bufMgr->allocPage(file, newPageNo, (Page*&)newBucket);  
+    status = bufMgr->allocPage(file, newPageNo, (Page*&)newBucket);
     if (status != OK)
       return status;
 
@@ -306,16 +306,16 @@ const Status Index::insertEntry(const void *value, RID rid)
       // reset the appropriate directories to the new bucket
       int oldindex = index % (1 << (bucket->depth - 1));
       int newindex = oldindex + (1 << (bucket->depth - 1));
-      for (int j = 0; j < dirSize; j++) 
+      for (int j = 0; j < dirSize; j++)
 	if ((j % (1 << (bucket->depth))) == newindex)
 	  headerPage->dir[j] = newPageNo;
     }
 
 #ifdef DEBUGIND
       printDir();
-#endif 
+#endif
 
-    // call insertEntry recursively to insert all (value, rid) 
+    // call insertEntry recursively to insert all (value, rid)
     // pairs in the temporary area to the index
 
     for (int k = 0; k < counter; k++) {
@@ -329,7 +329,7 @@ const Status Index::insertEntry(const void *value, RID rid)
     if (status != OK)
       return status;
 
-    } else { 
+    } else {
     // There is sufficient free space in the bucket. Insert (value, rid) here
 
     int offset = (bucket->slotCnt) * recSize;
@@ -347,16 +347,16 @@ void Index::printDir() {
 
   cout << "printing directory...\n";
   cout << "depth is " << headerPage->depth << endl;
-  for (int i = 0; i < dirSize; i++) 
+  for (int i = 0; i < dirSize; i++)
     cout << i << "\tpoints to bucket " << headerPage->dir[i] << endl;
   cout << endl;
 }
-#endif 
+#endif
 
 // delete <attribute, rid> pair from the index. return OK if deleted
 // return RECNOTFOUND if such a pair does not exist in the index
 
-const Status Index::deleteEntry(const void* value, const RID & rid) 
+const Status Index::deleteEntry(const void* value, const RID & rid)
 {
   Status status;
   int index;
@@ -367,14 +367,14 @@ const Status Index::deleteEntry(const void* value, const RID & rid)
   // read in the bucket that might have the entry in it
   int pageNo = headerPage->dir[index];
   status = bufMgr->readPage(file, pageNo, (Page*&)bucket);
-  if (status != OK) 
+  if (status != OK)
     return status;
 
   // scan the bucket for the entry. Delete it if found
   for(int i = 0; i < bucket->slotCnt; i++) {
     status = matchRec(bucket, value, i);
     if (status == OK) {
-      if (!memcmp(&rid, &(bucket->data[i*recSize + headerPage->length]), 
+      if (!memcmp(&rid, &(bucket->data[i*recSize + headerPage->length]),
 		 sizeof(RID))) {
 
 	// the entry is found. Decrease the entry counts in the bucket
@@ -382,7 +382,7 @@ const Status Index::deleteEntry(const void* value, const RID & rid)
 	// by the deleted entry
 
 	(bucket->slotCnt)--;
-	memcpy(&(bucket->data[i*recSize]), 
+	memcpy(&(bucket->data[i*recSize]),
 	       &(bucket->data[recSize*(bucket->slotCnt)]),recSize);
 	status = bufMgr->unPinPage(file, pageNo, true);
 	return status;
@@ -399,9 +399,9 @@ const Status Index::deleteEntry(const void* value, const RID & rid)
 // Test if the index entry in 'bucket' matches the attribute 'value.
 // 'offset' indicates the location of the entry in the bucket
 
-const Status Index::matchRec(const Bucket* bucket, 
-			     const void* value, 
-			     const int offset) 
+const Status Index::matchRec(const Bucket* bucket,
+			     const void* value,
+			     const int offset)
 {
   const char* tmp = &(bucket->data[offset*recSize]);
 
@@ -412,7 +412,7 @@ const Status Index::matchRec(const Bucket* bucket,
     break;
   case DOUBLE:
     {
-       // Take care of byte misallignments 
+       // Take care of byte misallignments
        double inVal, inTmp;
        memcpy (&inVal, value, sizeof (double));
        memcpy (&inTmp, tmp, sizeof (double));
@@ -450,7 +450,7 @@ void Index::printBucs() {
     status = bufMgr->unPinPage(file, pageNo, false);
   }
 }
-#endif 
+#endif
 
 // start a scan of the entries with attribute 'value'. return SCANTABFULL
 // if too many scans are open at the same time
@@ -464,24 +464,24 @@ const Status Index::startScan(const void* scanValue)
   // read in and pin down the bucket containing entries with 'value'
   // in the buffer pool
   Status status = hashIndex(curValue, hashvalue);
-  if (status != OK) 
+  if (status != OK)
     return status;
 
   int pageNo = curPageNo = headerPage->dir[hashvalue];
-  status = bufMgr->readPage(file, pageNo, 
+  status = bufMgr->readPage(file, pageNo,
 			    (Page*&)curBuc);
-  if (status != OK) 
+  if (status != OK)
     return status;
 
   curOffset = 0;
-  
+
   return OK;
 }
 
 // return the next entry with attribute 'value'. return NOMORERECS if
 // it reaches the end of the bucket
 
-const Status Index::scanNext(RID& outRid) 
+const Status Index::scanNext(RID& outRid)
 {
   int& offset = curOffset;
   Bucket* buc = curBuc;
@@ -503,7 +503,7 @@ const Status Index::scanNext(RID& outRid)
 }
 
 // unpin the bucket and clear the scan table entry.
-const Status Index::endScan() 
+const Status Index::endScan()
 {
   Status status;
 
