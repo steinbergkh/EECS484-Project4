@@ -59,8 +59,12 @@ Status Updates::Insert(const string& relation,      // Name of the relation
    // set to true at index where attribute was found
    // and value was inserted into record (detects
    // duplicate attr/extra attrs)
-   bool dataInserted[attrCnt] = {false};
-   bool attrFound[attrCnt] = {false};
+   bool dataInserted[attrCnt];
+   bool attrFound[attrCnt];
+   for (int i = 0; i < attrCnt ; ++i){
+      dataInserted[i] = false;
+      attrFound[i] = false;
+   }
 
 
    int i_attribute, i_insert;
