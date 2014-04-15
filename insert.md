@@ -65,4 +65,9 @@ At this point, you have all the information to
 - FIRST, the constructor for the "relation" heapfile needs to be called
    - creates a heapfile if one doesn't exist
    - if one exists, it opens the heapfile
--
+- THEN, the record you created needs to be inserted
+- This returns a Record ID
+
+####Index the Record
+- The Record ID you just created needs to be inserted in each index for the relation
+- To determine if there is one or more index for the relation, you need to look at the catalogs

@@ -1,0 +1,410 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+BUF_H	buf.h	/^#define BUF_H$/;"	d
+BufDesc	buf.h	/^class BufDesc {$/;"	c
+file	buf.h	/^  File* file;   \/\/ pointer to file object$/;"	m	class:BufDesc
+pageNo	buf.h	/^  int   pageNo; \/\/ page within file$/;"	m	class:BufDesc
+pinCnt	buf.h	/^  int   pinCnt; \/\/ number of times this page has been pinned$/;"	m	class:BufDesc
+dirty	buf.h	/^  bool dirty;   \/\/ true if dirty;  false otherwise$/;"	m	class:BufDesc
+valid	buf.h	/^  bool valid;   \/\/ true if page is valid$/;"	m	class:BufDesc
+refbit	buf.h	/^  bool refbit;  \/\/ has this buffer frame been referenced recently?$/;"	m	class:BufDesc
+Clear	buf.h	/^  void Clear() {  \/\/ initialize buffer frame for a new user$/;"	f	class:BufDesc
+Set	buf.h	/^  void Set(File* filePtr, int pageNum) { $/;"	f	class:BufDesc
+BufDesc	buf.h	/^  BufDesc() {$/;"	f	class:BufDesc
+BufStats	buf.h	/^struct BufStats$/;"	s
+accesses	buf.h	/^  unsigned accesses;    \/\/ Total number of accesses to buffer pool$/;"	m	struct:BufStats
+diskreads	buf.h	/^  unsigned diskreads;   \/\/ Number of pages read from disk $/;"	m	struct:BufStats
+diskwrites	buf.h	/^  unsigned diskwrites;  \/\/ Number of pages written back to disk$/;"	m	struct:BufStats
+clear	buf.h	/^  void clear()$/;"	f	struct:BufStats
+BufStats	buf.h	/^  BufStats()$/;"	f	struct:BufStats
+operator <<	buf.h	/^inline ostream & operator << (ostream & os, const BufStats & stats)$/;"	f
+BufMgr	buf.h	/^class BufMgr $/;"	c
+clockHand	buf.h	/^  unsigned int	 clockHand;  \/\/ clock hand for clock algorithm$/;"	m	class:BufMgr
+bufMap	buf.h	/^  BufMap         bufMap;     \/\/ mapping of (File, page) to frame$/;"	m	class:BufMgr
+bufTable	buf.h	/^  BufDesc	 *bufTable;  \/\/ vector of status info, 1 per page$/;"	m	class:BufMgr
+numBufs	buf.h	/^  unsigned int   numBufs;    \/\/ Number of pages in buffer pool$/;"	m	class:BufMgr
+bufStats	buf.h	/^  BufStats       bufStats;   \/\/ Statistics about buffer pool usage$/;"	m	class:BufMgr
+advanceClock	buf.h	/^  void advanceClock()$/;"	f	class:BufMgr
+bufPool	buf.h	/^  Page	         *bufPool;   \/\/ actual buffer pool$/;"	m	class:BufMgr
+getBufStats	buf.h	/^  const BufStats & getBufStats() const \/\/ Get buffer pool usage$/;"	f	class:BufMgr
+clearBufStats	buf.h	/^  void clearBufStats() $/;"	f	class:BufMgr
+BUFMAP_H	bufMap.h	/^#define BUFMAP_H$/;"	d
+FileAndPage	bufMap.h	/^struct FileAndPage$/;"	s
+file	bufMap.h	/^  File*	file;    \/\/ pointer to a file object$/;"	m	struct:FileAndPage
+pageNo	bufMap.h	/^  int	pageNo;  \/\/ page number within a file$/;"	m	struct:FileAndPage
+FileAndPage	bufMap.h	/^  FileAndPage(File *f, int p)$/;"	f	struct:FileAndPage
+operator ==	bufMap.h	/^  bool  operator == (const FileAndPage & other) const$/;"	f	struct:FileAndPage
+operator <	bufMap.h	/^  bool  operator < (const FileAndPage & other) const$/;"	f	struct:FileAndPage
+BufMap	bufMap.h	/^class BufMap $/;"	c
+BufHashTable	bufMap.h	/^  typedef map<FileAndPage, unsigned int> BufHashTable;$/;"	t	class:BufMap
+hashTable	bufMap.h	/^  BufHashTable hashTable;  \/\/ Hash table for locating frame$/;"	m	class:BufMap
+CATALOG_H	catalog.h	/^#define CATALOG_H$/;"	d
+RELCATNAME	catalog.h	/^#define RELCATNAME /;"	d
+ATTRCATNAME	catalog.h	/^#define ATTRCATNAME /;"	d
+RELNAME	catalog.h	/^#define RELNAME /;"	d
+MAXNAME	catalog.h	/^#define MAXNAME /;"	d
+MAXSTRINGLEN	catalog.h	/^#define MAXSTRINGLEN /;"	d
+relName	catalog.h	/^  char relName[MAXNAME];                \/\/ relation name$/;"	m	struct:__anon1
+attrCnt	catalog.h	/^  int attrCnt;                          \/\/ number of attributes$/;"	m	struct:__anon1
+indexCnt	catalog.h	/^  int indexCnt;                         \/\/ number of indexed attrs$/;"	m	struct:__anon1
+RelDesc	catalog.h	/^} RelDesc;$/;"	t	typeref:struct:__anon1
+relName	catalog.h	/^  char relName[MAXNAME];                \/\/ relation name$/;"	m	struct:__anon2
+attrName	catalog.h	/^  char attrName[MAXNAME];               \/\/ attribute name$/;"	m	struct:__anon2
+attrType	catalog.h	/^  int  attrType;                        \/\/ INTEGER, DOUBLE, or STRING$/;"	m	struct:__anon2
+attrLen	catalog.h	/^  int  attrLen;                         \/\/ length of attribute in bytes$/;"	m	struct:__anon2
+attrValue	catalog.h	/^  void *attrValue;                      \/\/ ptr to binary value (used $/;"	m	struct:__anon2
+attrInfo	catalog.h	/^} attrInfo; $/;"	t	typeref:struct:__anon2
+RelCatalog	catalog.h	/^class RelCatalog : public HeapFileScan {$/;"	c
+relName	catalog.h	/^  char relName[MAXNAME];                \/\/ relation name$/;"	m	struct:__anon3
+attrName	catalog.h	/^  char attrName[MAXNAME];               \/\/ attribute name$/;"	m	struct:__anon3
+attrOffset	catalog.h	/^  int attrOffset;                       \/\/ attribute offset$/;"	m	struct:__anon3
+attrType	catalog.h	/^  int attrType;                         \/\/ attribute type$/;"	m	struct:__anon3
+attrLen	catalog.h	/^  int attrLen;                          \/\/ attribute length$/;"	m	struct:__anon3
+indexed	catalog.h	/^  int indexed;                          \/\/ TRUE if indexed$/;"	m	struct:__anon3
+AttrDesc	catalog.h	/^} AttrDesc;$/;"	t	typeref:struct:__anon3
+AttrCatalog	catalog.h	/^class AttrCatalog : public HeapFileScan {$/;"	c
+DATATYPES_H	datatypes.h	/^#define DATATYPES_H$/;"	d
+Datatype	datatypes.h	/^enum Datatype {INTEGER=0, DOUBLE=1, STRING=2 };$/;"	g
+INTEGER	datatypes.h	/^enum Datatype {INTEGER=0, DOUBLE=1, STRING=2 };$/;"	e	enum:Datatype
+DOUBLE	datatypes.h	/^enum Datatype {INTEGER=0, DOUBLE=1, STRING=2 };$/;"	e	enum:Datatype
+STRING	datatypes.h	/^enum Datatype {INTEGER=0, DOUBLE=1, STRING=2 };$/;"	e	enum:Datatype
+Operator	datatypes.h	/^enum Operator { LT, LTE, EQ, GTE, GT, NE, NOTSET };  \/\/ scan operators$/;"	g
+LT	datatypes.h	/^enum Operator { LT, LTE, EQ, GTE, GT, NE, NOTSET };  \/\/ scan operators$/;"	e	enum:Operator
+LTE	datatypes.h	/^enum Operator { LT, LTE, EQ, GTE, GT, NE, NOTSET };  \/\/ scan operators$/;"	e	enum:Operator
+EQ	datatypes.h	/^enum Operator { LT, LTE, EQ, GTE, GT, NE, NOTSET };  \/\/ scan operators$/;"	e	enum:Operator
+GTE	datatypes.h	/^enum Operator { LT, LTE, EQ, GTE, GT, NE, NOTSET };  \/\/ scan operators$/;"	e	enum:Operator
+GT	datatypes.h	/^enum Operator { LT, LTE, EQ, GTE, GT, NE, NOTSET };  \/\/ scan operators$/;"	e	enum:Operator
+NE	datatypes.h	/^enum Operator { LT, LTE, EQ, GTE, GT, NE, NOTSET };  \/\/ scan operators$/;"	e	enum:Operator
+NOTSET	datatypes.h	/^enum Operator { LT, LTE, EQ, GTE, GT, NE, NOTSET };  \/\/ scan operators$/;"	e	enum:Operator
+DB_H	db.h	/^#define DB_H$/;"	d
+File	db.h	/^class File {$/;"	c
+operator ==	db.h	/^  bool operator == (const File & other) const$/;"	f	class:File
+operator <	db.h	/^  bool operator < (const File & other) const$/;"	f	class:File
+printName	db.h	/^  void printName() const$/;"	f	class:File
+fileName	db.h	/^  string fileName;                    \/\/ The name of the file$/;"	m	class:File
+openCnt	db.h	/^  int openCnt;                        \/\/ # times file has been opened$/;"	m	class:File
+unixFile	db.h	/^  int unixFile;                       \/\/ unix file stream for file$/;"	m	class:File
+DB	db.h	/^class DB {$/;"	c
+OpenFileMap	db.h	/^  typedef map<string, File* > OpenFileMap;$/;"	t	class:DB
+openFiles	db.h	/^  OpenFileMap   openFiles;    \/\/ list of open files$/;"	m	class:DB
+nextFree	db.h	/^  int nextFree;                         \/\/ page # of next page on free list$/;"	m	struct:__anon4
+firstPage	db.h	/^  int firstPage;                        \/\/ page # of first page in file$/;"	m	struct:__anon4
+numPages	db.h	/^  int numPages;                         \/\/ total # of pages in file$/;"	m	struct:__anon4
+DBPage	db.h	/^} DBPage;$/;"	t	typeref:struct:__anon4
+db	dbcreate.cpp	/^DB db;                 \/\/ a handle for the DB class$/;"	v
+error	dbcreate.cpp	/^Error error;           \/\/ a handle for the error class$/;"	v
+bufMgr	dbcreate.cpp	/^BufMgr *bufMgr;        \/\/ pointer to the buffer manager $/;"	v
+relCat	dbcreate.cpp	/^RelCatalog *relCat;    \/\/ pointer to the relation catalogs $/;"	v
+attrCat	dbcreate.cpp	/^AttrCatalog *attrCat;  \/\/ pointer to the attribute catalogs$/;"	v
+CALL	dbcreate.cpp	/^#define CALL(/;"	d	file:
+main	dbcreate.cpp	/^int main(int argc, char *argv[])$/;"	f
+BOOTSTRAP_CATALOGS	dbcreate.cpp	/^#define BOOTSTRAP_CATALOGS /;"	d	file:
+db	dbcreateEC.cpp	/^DB db;                 \/\/ a handle for the DB class$/;"	v
+error	dbcreateEC.cpp	/^Error error;           \/\/ a handle for the error class$/;"	v
+bufMgr	dbcreateEC.cpp	/^BufMgr *bufMgr;        \/\/ pointer to the buffer manager $/;"	v
+relCat	dbcreateEC.cpp	/^RelCatalog *relCat;    \/\/ pointer to the relation catalogs $/;"	v
+attrCat	dbcreateEC.cpp	/^AttrCatalog *attrCat;  \/\/ pointer to the attribute catalogs$/;"	v
+CALL	dbcreateEC.cpp	/^#define CALL(/;"	d	file:
+main	dbcreateEC.cpp	/^int main(int argc, char *argv[])$/;"	f
+BOOTSTRAP_CATALOGS	dbcreateEC.cpp	/^#define BOOTSTRAP_CATALOGS /;"	d	file:
+main	dbdestroy.cpp	/^int main(int argc, char *argv[])$/;"	f
+main	dbdestroyEC.cpp	/^int main(int argc, char *argv[])$/;"	f
+print	error.cpp	/^void Error::print(Status status)$/;"	f	class:Error
+ERROR_H	error.h	/^#define ERROR_H$/;"	d
+Status	error.h	/^enum Status {$/;"	g
+OK	error.h	/^       OK = 0, NOTUSED1 = -999,$/;"	e	enum:Status
+NOTUSED1	error.h	/^       OK = 0, NOTUSED1 = -999,$/;"	e	enum:Status
+BADFILEPTR	error.h	/^       BADFILEPTR, BADFILE, FILETABFULL, FILEOPEN, FILENOTOPEN,$/;"	e	enum:Status
+BADFILE	error.h	/^       BADFILEPTR, BADFILE, FILETABFULL, FILEOPEN, FILENOTOPEN,$/;"	e	enum:Status
+FILETABFULL	error.h	/^       BADFILEPTR, BADFILE, FILETABFULL, FILEOPEN, FILENOTOPEN,$/;"	e	enum:Status
+FILEOPEN	error.h	/^       BADFILEPTR, BADFILE, FILETABFULL, FILEOPEN, FILENOTOPEN,$/;"	e	enum:Status
+FILENOTOPEN	error.h	/^       BADFILEPTR, BADFILE, FILETABFULL, FILEOPEN, FILENOTOPEN,$/;"	e	enum:Status
+UNIXERR	error.h	/^       UNIXERR, BADPAGEPTR, BADPAGENO, FILEEXISTS,$/;"	e	enum:Status
+BADPAGEPTR	error.h	/^       UNIXERR, BADPAGEPTR, BADPAGENO, FILEEXISTS,$/;"	e	enum:Status
+BADPAGENO	error.h	/^       UNIXERR, BADPAGEPTR, BADPAGENO, FILEEXISTS,$/;"	e	enum:Status
+FILEEXISTS	error.h	/^       UNIXERR, BADPAGEPTR, BADPAGENO, FILEEXISTS,$/;"	e	enum:Status
+BUFMAPERROR	error.h	/^       BUFMAPERROR, BUFMAPNOTFOUND, BUFFEREXCEEDED, PAGENOTPINNED,$/;"	e	enum:Status
+BUFMAPNOTFOUND	error.h	/^       BUFMAPERROR, BUFMAPNOTFOUND, BUFFEREXCEEDED, PAGENOTPINNED,$/;"	e	enum:Status
+BUFFEREXCEEDED	error.h	/^       BUFMAPERROR, BUFMAPNOTFOUND, BUFFEREXCEEDED, PAGENOTPINNED,$/;"	e	enum:Status
+PAGENOTPINNED	error.h	/^       BUFMAPERROR, BUFMAPNOTFOUND, BUFFEREXCEEDED, PAGENOTPINNED,$/;"	e	enum:Status
+BADBUFFER	error.h	/^       BADBUFFER, PAGEPINNED,$/;"	e	enum:Status
+PAGEPINNED	error.h	/^       BADBUFFER, PAGEPINNED,$/;"	e	enum:Status
+NOSPACE	error.h	/^       NOSPACE,  NORECORDS,  ENDOFPAGE, INVALIDSLOTNO,$/;"	e	enum:Status
+NORECORDS	error.h	/^       NOSPACE,  NORECORDS,  ENDOFPAGE, INVALIDSLOTNO,$/;"	e	enum:Status
+ENDOFPAGE	error.h	/^       NOSPACE,  NORECORDS,  ENDOFPAGE, INVALIDSLOTNO,$/;"	e	enum:Status
+INVALIDSLOTNO	error.h	/^       NOSPACE,  NORECORDS,  ENDOFPAGE, INVALIDSLOTNO,$/;"	e	enum:Status
+BADRID	error.h	/^       BADRID, BADRECPTR, BADSCANPARM, BADSCANID, SCANTABFULL, FILEEOF,$/;"	e	enum:Status
+BADRECPTR	error.h	/^       BADRID, BADRECPTR, BADSCANPARM, BADSCANID, SCANTABFULL, FILEEOF,$/;"	e	enum:Status
+BADSCANPARM	error.h	/^       BADRID, BADRECPTR, BADSCANPARM, BADSCANID, SCANTABFULL, FILEEOF,$/;"	e	enum:Status
+BADSCANID	error.h	/^       BADRID, BADRECPTR, BADSCANPARM, BADSCANID, SCANTABFULL, FILEEOF,$/;"	e	enum:Status
+SCANTABFULL	error.h	/^       BADRID, BADRECPTR, BADSCANPARM, BADSCANID, SCANTABFULL, FILEEOF,$/;"	e	enum:Status
+FILEEOF	error.h	/^       BADRID, BADRECPTR, BADSCANPARM, BADSCANID, SCANTABFULL, FILEEOF,$/;"	e	enum:Status
+BADINDEXPARM	error.h	/^       BADINDEXPARM, $/;"	e	enum:Status
+RECNOTFOUND	error.h	/^       RECNOTFOUND, BUCKETFULL, DIROVERFLOW, $/;"	e	enum:Status
+BUCKETFULL	error.h	/^       RECNOTFOUND, BUCKETFULL, DIROVERFLOW, $/;"	e	enum:Status
+DIROVERFLOW	error.h	/^       RECNOTFOUND, BUCKETFULL, DIROVERFLOW, $/;"	e	enum:Status
+NONUNIQUEENTRY	error.h	/^       NONUNIQUEENTRY, NOMORERECS, NOCHARIDX, $/;"	e	enum:Status
+NOMORERECS	error.h	/^       NONUNIQUEENTRY, NOMORERECS, NOCHARIDX, $/;"	e	enum:Status
+NOCHARIDX	error.h	/^       NONUNIQUEENTRY, NOMORERECS, NOCHARIDX, $/;"	e	enum:Status
+INDEXPAGEFULL	error.h	/^       INDEXPAGEFULL, INDEXPAGENOTFULL, BADINDEXPAGEPOSITION, $/;"	e	enum:Status
+INDEXPAGENOTFULL	error.h	/^       INDEXPAGEFULL, INDEXPAGENOTFULL, BADINDEXPAGEPOSITION, $/;"	e	enum:Status
+BADINDEXPAGEPOSITION	error.h	/^       INDEXPAGEFULL, INDEXPAGENOTFULL, BADINDEXPAGEPOSITION, $/;"	e	enum:Status
+INDEXLOADERROR	error.h	/^       INDEXLOADERROR, ENTRYNOTUNIQUE, EXPECTINGNONLEAFPAGE, SCANEXECUTING, $/;"	e	enum:Status
+ENTRYNOTUNIQUE	error.h	/^       INDEXLOADERROR, ENTRYNOTUNIQUE, EXPECTINGNONLEAFPAGE, SCANEXECUTING, $/;"	e	enum:Status
+EXPECTINGNONLEAFPAGE	error.h	/^       INDEXLOADERROR, ENTRYNOTUNIQUE, EXPECTINGNONLEAFPAGE, SCANEXECUTING, $/;"	e	enum:Status
+SCANEXECUTING	error.h	/^       INDEXLOADERROR, ENTRYNOTUNIQUE, EXPECTINGNONLEAFPAGE, SCANEXECUTING, $/;"	e	enum:Status
+BADINDEXSCANPARM	error.h	/^       BADINDEXSCANPARM, NOSCANEXECUTING, ENDOFINDEXSCAN, NOTFOUNDINLEAF, $/;"	e	enum:Status
+NOSCANEXECUTING	error.h	/^       BADINDEXSCANPARM, NOSCANEXECUTING, ENDOFINDEXSCAN, NOTFOUNDINLEAF, $/;"	e	enum:Status
+ENDOFINDEXSCAN	error.h	/^       BADINDEXSCANPARM, NOSCANEXECUTING, ENDOFINDEXSCAN, NOTFOUNDINLEAF, $/;"	e	enum:Status
+NOTFOUNDINLEAF	error.h	/^       BADINDEXSCANPARM, NOSCANEXECUTING, ENDOFINDEXSCAN, NOTFOUNDINLEAF, $/;"	e	enum:Status
+NOTFOUNDINNONLEAF	error.h	/^       NOTFOUNDINNONLEAF, MERGEERROR, $/;"	e	enum:Status
+MERGEERROR	error.h	/^       NOTFOUNDINNONLEAF, MERGEERROR, $/;"	e	enum:Status
+BADSORTPARM	error.h	/^       BADSORTPARM, INSUFMEM, $/;"	e	enum:Status
+INSUFMEM	error.h	/^       BADSORTPARM, INSUFMEM, $/;"	e	enum:Status
+BADCATPARM	error.h	/^       BADCATPARM, RELNOTFOUND, ATTRNOTFOUND,$/;"	e	enum:Status
+RELNOTFOUND	error.h	/^       BADCATPARM, RELNOTFOUND, ATTRNOTFOUND,$/;"	e	enum:Status
+ATTRNOTFOUND	error.h	/^       BADCATPARM, RELNOTFOUND, ATTRNOTFOUND,$/;"	e	enum:Status
+NAMETOOLONG	error.h	/^       NAMETOOLONG, DUPLATTR, RELEXISTS, NOINDEX,$/;"	e	enum:Status
+DUPLATTR	error.h	/^       NAMETOOLONG, DUPLATTR, RELEXISTS, NOINDEX,$/;"	e	enum:Status
+RELEXISTS	error.h	/^       NAMETOOLONG, DUPLATTR, RELEXISTS, NOINDEX,$/;"	e	enum:Status
+NOINDEX	error.h	/^       NAMETOOLONG, DUPLATTR, RELEXISTS, NOINDEX,$/;"	e	enum:Status
+INDEXEXISTS	error.h	/^       INDEXEXISTS, ATTRTOOLONG,$/;"	e	enum:Status
+ATTRTOOLONG	error.h	/^       INDEXEXISTS, ATTRTOOLONG,$/;"	e	enum:Status
+ATTRTYPEMISMATCH	error.h	/^       ATTRTYPEMISMATCH, TMP_RES_EXISTS,$/;"	e	enum:Status
+TMP_RES_EXISTS	error.h	/^       ATTRTYPEMISMATCH, TMP_RES_EXISTS,$/;"	e	enum:Status
+NOTUSED2	error.h	/^       NOTUSED2$/;"	e	enum:Status
+Error	error.h	/^class Error {$/;"	c
+HeapFile	heapfile.cpp	/^HeapFile::HeapFile(const string & name, Status& returnStatus)$/;"	f	class:HeapFile
+~HeapFile	heapfile.cpp	/^HeapFile::~HeapFile()$/;"	f	class:HeapFile
+getRecCnt	heapfile.cpp	/^const int HeapFile::getRecCnt() const$/;"	f	class:HeapFile
+insertRecord	heapfile.cpp	/^const Status HeapFile::insertRecord(const Record & rec, RID& outRid)$/;"	f	class:HeapFile
+deleteRecord	heapfile.cpp	/^const Status HeapFile::deleteRecord(const RID & rid)$/;"	f	class:HeapFile
+HeapFileScan	heapfile.cpp	/^HeapFileScan::HeapFileScan(const string & name,$/;"	f	class:HeapFileScan
+HeapFileScan	heapfile.cpp	/^HeapFileScan::HeapFileScan(const string & name,$/;"	f	class:HeapFileScan
+startScan	heapfile.cpp	/^const Status HeapFileScan::startScan(const int offset_,$/;"	f	class:HeapFileScan
+endScan	heapfile.cpp	/^const Status HeapFileScan::endScan()$/;"	f	class:HeapFileScan
+~HeapFileScan	heapfile.cpp	/^HeapFileScan::~HeapFileScan()$/;"	f	class:HeapFileScan
+scanNext	heapfile.cpp	/^const Status HeapFileScan::scanNext(RID& outRid)$/;"	f	class:HeapFileScan
+scanNext	heapfile.cpp	/^const Status HeapFileScan::scanNext(RID& outRid, Record& rec)$/;"	f	class:HeapFileScan
+getRecord	heapfile.cpp	/^const Status HeapFileScan::getRecord(const RID & rid, Record & rec)$/;"	f	class:HeapFileScan
+markDirty	heapfile.cpp	/^const Status HeapFileScan::markDirty(const RID & rid)$/;"	f	class:HeapFileScan
+matchRec	heapfile.cpp	/^const bool HeapFileScan::matchRec(const Record & rec) const$/;"	f	class:HeapFileScan
+getRandomRecord	heapfile.cpp	/^const Status HeapFileScan::getRandomRecord(const RID &  rid, $/;"	f	class:HeapFileScan
+setMarker	heapfile.cpp	/^Status HeapFileScan::setMarker() $/;"	f	class:HeapFileScan
+gotoMarker	heapfile.cpp	/^Status HeapFileScan::gotoMarker(RID &  rid, Record& rec) $/;"	f	class:HeapFileScan
+HEAPFILE_H	heapfile.h	/^#define HEAPFILE_H$/;"	d
+MAXNAMESIZE	heapfile.h	/^const unsigned MAXNAMESIZE = 50;$/;"	v
+HeaderPage	heapfile.h	/^struct HeaderPage$/;"	s
+fileName	heapfile.h	/^  char fileName[MAXNAMESIZE];   \/\/ name of file$/;"	m	struct:HeaderPage
+firstPage	heapfile.h	/^  int		firstPage;	\/\/ pageNo of first data page in file$/;"	m	struct:HeaderPage
+lastPage	heapfile.h	/^  int		lastPage;	\/\/ pageNo of last data page in file$/;"	m	struct:HeaderPage
+pageCnt	heapfile.h	/^  int		pageCnt;	\/\/ number of pages$/;"	m	struct:HeaderPage
+recCnt	heapfile.h	/^  int		recCnt;		\/\/ record count$/;"	m	struct:HeaderPage
+HeapFile	heapfile.h	/^class HeapFile {$/;"	c
+file	heapfile.h	/^  File* 	file;           \/\/ pointer to underlying DB File object$/;"	m	class:HeapFile
+headerPage	heapfile.h	/^  HeaderPage*   headerPage;	\/\/ pointer to header page in buffer pool$/;"	m	class:HeapFile
+headerPageNo	heapfile.h	/^  int		headerPageNo;	\/\/ page number of header page$/;"	m	class:HeapFile
+HeapFileScan	heapfile.h	/^class HeapFileScan : public HeapFile$/;"	c
+curRec	heapfile.h	/^  RID   curRec;            \/\/ rid of last record returned$/;"	m	class:HeapFileScan
+curPage	heapfile.h	/^  Page* curPage;	   \/\/ pointer to pinned page in buffer pool$/;"	m	class:HeapFileScan
+curPageNo	heapfile.h	/^  int   curPageNo;	   \/\/ page number of pinned page$/;"	m	class:HeapFileScan
+dirtyFlag	heapfile.h	/^  bool  dirtyFlag;	   \/\/ true if page has been updated$/;"	m	class:HeapFileScan
+offset	heapfile.h	/^  int   offset;            \/\/ byte offset of filter attribute$/;"	m	class:HeapFileScan
+length	heapfile.h	/^  int   length;            \/\/ length of filter attribute$/;"	m	class:HeapFileScan
+type	heapfile.h	/^  Datatype type;           \/\/ datatype of filter attribute$/;"	m	class:HeapFileScan
+filter	heapfile.h	/^  const char* filter;      \/\/ comparison value of filter$/;"	m	class:HeapFileScan
+op	heapfile.h	/^  Operator op;             \/\/ comparison operator of filter$/;"	m	class:HeapFileScan
+mark	heapfile.h	/^  RID   mark;              \/\/ last marked spot (RID) in the file.$/;"	m	class:HeapFileScan
+MAX	index.cpp	/^#define MAX(/;"	d	file:
+Index	index.cpp	/^Index::Index(const string & name, $/;"	f	class:Index
+~Index	index.cpp	/^Index::~Index() {$/;"	f	class:Index
+hashIndex	index.cpp	/^const Status Index::hashIndex(const void *attr, int& hashvalue)$/;"	f	class:Index
+insertEntry	index.cpp	/^const Status Index::insertEntry(const void *value, RID rid) $/;"	f	class:Index
+printDir	index.cpp	/^void Index::printDir() {$/;"	f	class:Index
+deleteEntry	index.cpp	/^const Status Index::deleteEntry(const void* value, const RID & rid) $/;"	f	class:Index
+matchRec	index.cpp	/^const Status Index::matchRec(const Bucket* bucket, $/;"	f	class:Index
+printBucs	index.cpp	/^void Index::printBucs() {$/;"	f	class:Index
+startScan	index.cpp	/^const Status Index::startScan(const void* scanValue)$/;"	f	class:Index
+scanNext	index.cpp	/^const Status Index::scanNext(RID& outRid) $/;"	f	class:Index
+endScan	index.cpp	/^const Status Index::endScan() $/;"	f	class:Index
+INDEX_H	index.h	/^#define INDEX_H$/;"	d
+DIRSIZE	index.h	/^const int DIRSIZE = PAGESIZE - MAXNAMESIZE - 3*sizeof(int) - sizeof(Datatype);$/;"	v
+UNIQUE	index.h	/^const int UNIQUE  = 1;$/;"	v
+NONUNIQUE	index.h	/^const int NONUNIQUE = 0;$/;"	v
+Index	index.h	/^   typedef BTreeIndex Index; $/;"	t
+iHeaderPage	index.h	/^struct iHeaderPage$/;"	s
+fileName	index.h	/^    char          fileName[MAXNAMESIZE];  \/\/ name of file$/;"	m	struct:iHeaderPage
+offset	index.h	/^    int           offset;             \/\/ byte offset of the indexed attribute $/;"	m	struct:iHeaderPage
+length	index.h	/^    int           length;             \/\/ length of the attribute$/;"	m	struct:iHeaderPage
+type	index.h	/^    Datatype      type;               \/\/ datatype of the attribute$/;"	m	struct:iHeaderPage
+depth	index.h	/^    int           depth;              \/\/ depth of the directory$/;"	m	struct:iHeaderPage
+unique	index.h	/^    int           unique;             \/\/ enforce uniqueness on inserts$/;"	m	struct:iHeaderPage
+dir	index.h	/^    short         dir[1];         $/;"	m	struct:iHeaderPage
+data	index.h	/^    char          data[DIRSIZE - 1];$/;"	m	struct:iHeaderPage
+Bucket	index.h	/^struct Bucket {$/;"	s
+depth	index.h	/^  short depth;$/;"	m	struct:Bucket
+slotCnt	index.h	/^  short slotCnt;$/;"	m	struct:Bucket
+data	index.h	/^  char  data[PAGESIZE - 2*sizeof(short)];$/;"	m	struct:Bucket
+Index	index.h	/^class Index {$/;"	c
+file	index.h	/^  File*         file;$/;"	m	class:Index
+headerPage	index.h	/^  iHeaderPage*	headerPage;      $/;"	m	class:Index
+headerPageNo	index.h	/^  int           headerPageNo;     $/;"	m	class:Index
+dirSize	index.h	/^  int           dirSize;            \/\/ size of the directory$/;"	m	class:Index
+numSlots	index.h	/^  int           numSlots;           \/\/ maximum number of slots in a page$/;"	m	class:Index
+recSize	index.h	/^  int           recSize;$/;"	m	class:Index
+curOffset	index.h	/^  int   curOffset;            \/\/ offset of the next entry to be scanned $/;"	m	class:Index
+curBuc	index.h	/^  Bucket* curBuc;             \/\/ pointer to pinned page in buffer pool$/;"	m	class:Index
+curPageNo	index.h	/^  int   curPageNo;            \/\/ page number of pinned page$/;"	m	class:Index
+curValue	index.h	/^  const void* curValue;          \/\/ comparison value of filter$/;"	m	class:Index
+IndexSelect	indexselect.cpp	/^Status Operators::IndexSelect(const string& result,       \/\/ Name of the output relation$/;"	f	class:Operators
+INL	inl.cpp	/^Status Operators::INL(const string& result,           \/\/ Name of the output relation$/;"	f	class:Operators
+Insert	insert.cpp	/^Status Updates::Insert(const string& relation,      \/\/ Name of the relation$/;"	f	class:Updates
+MAX	join.cpp	/^#define MAX(/;"	d	file:
+DOUBLEERROR	join.cpp	/^#define DOUBLEERROR /;"	d	file:
+Join	join.cpp	/^Status Operators::Join(const string& result,           \/\/ Name of the output relation $/;"	f	class:Operators
+matchRec	join.cpp	/^int Operators::matchRec(const Record& outerRec,     \/\/ Left record$/;"	f	class:Operators
+LD	Makefile	/^LD =		ld$/;"	m
+LDFLAGS	Makefile	/^LDFLAGS =	$/;"	m
+CXX	Makefile	/^CXX =		g++$/;"	m
+CXXFLAGS	Makefile	/^CXXFLAGS =	-g -Wall -DDEBUG $/;"	m
+MAKEFILE	Makefile	/^MAKEFILE =	Makefile$/;"	m
+PURIFY	Makefile	/^PURIFY =        purify -collector=\/usr\/ccs\/bin\/ld -g++$/;"	m
+SRCS	Makefile	/^SRCS =		error.C heapfile.C index.C print.C insert.C select.C \\$/;"	m
+DSRCS	Makefile	/^DSRCS =		error.C print.C insert.C select.C \\$/;"	m
+MROBJS	Makefile	/^MROBJS =	error.o heapfile.o index.o print.o insert.o select.o \\$/;"	m
+DBOBJS	Makefile	/^DBOBJS =	print.o error.o heapfile.o index.o$/;"	m
+LIBS	Makefile	/^LIBS =		libsql.a libcat.a libmisc.a liblsm.a $/;"	m
+LIBSEC	Makefile	/^LIBSEC = 	libsql.a libcat.a libmisc.a libEC.a $/;"	m
+db	minirel.cpp	/^DB db;                 \/\/ a handle for the DB class$/;"	v
+error	minirel.cpp	/^Error error;           \/\/ a handle for the error class$/;"	v
+bufMgr	minirel.cpp	/^BufMgr *bufMgr;        \/\/ pointer to the buffer manager $/;"	v
+relCat	minirel.cpp	/^RelCatalog *relCat;    \/\/ pointer to the relation catalogs $/;"	v
+attrCat	minirel.cpp	/^AttrCatalog *attrCat;  \/\/ pointer to the attribute catalogs$/;"	v
+main	minirel.cpp	/^int main(int argc, char **argv)$/;"	f
+db	minirelEC.cpp	/^DB db;                 \/\/ a handle for the DB class$/;"	v
+error	minirelEC.cpp	/^Error error;           \/\/ a handle for the error class$/;"	v
+bufMgr	minirelEC.cpp	/^BufMgr *bufMgr;        \/\/ pointer to the buffer manager $/;"	v
+relCat	minirelEC.cpp	/^RelCatalog *relCat;    \/\/ pointer to the relation catalogs $/;"	v
+attrCat	minirelEC.cpp	/^AttrCatalog *attrCat;  \/\/ pointer to the attribute catalogs$/;"	v
+main	minirelEC.cpp	/^int main(int argc, char **argv)$/;"	f
+init	page.cpp	/^void Page::init(int pageNo)$/;"	f	class:Page
+dumpPage	page.cpp	/^void Page::dumpPage() const$/;"	f	class:Page
+getPrevPage	page.cpp	/^const int Page::getPrevPage() const$/;"	f	class:Page
+setPrevPage	page.cpp	/^void Page::setPrevPage(int pageNo)$/;"	f	class:Page
+setNextPage	page.cpp	/^void Page::setNextPage(int pageNo)$/;"	f	class:Page
+getNextPage	page.cpp	/^const int Page::getNextPage() const$/;"	f	class:Page
+getFreeSpace	page.cpp	/^const short Page::getFreeSpace() const$/;"	f	class:Page
+insertRecord	page.cpp	/^const Status Page::insertRecord(const Record & rec, RID& rid)$/;"	f	class:Page
+deleteRecord	page.cpp	/^const Status Page::deleteRecord(const RID & rid)$/;"	f	class:Page
+firstRecord	page.cpp	/^const Status Page::firstRecord(RID& firstRid) const$/;"	f	class:Page
+nextRecord	page.cpp	/^const Status Page::nextRecord (const RID &curRid, RID& nextRid) const$/;"	f	class:Page
+getRecord	page.cpp	/^const Status Page::getRecord(const RID & rid, Record & rec)$/;"	f	class:Page
+PAGE_H	page.h	/^#define PAGE_H$/;"	d
+RID	page.h	/^struct RID{$/;"	s
+pageNo	page.h	/^  int  pageNo;$/;"	m	struct:RID
+slotNo	page.h	/^  int  slotNo;$/;"	m	struct:RID
+operator ==	page.h	/^  bool operator == (const RID & other) const$/;"	f	struct:RID
+RID	page.h	/^  RID() {reset();}$/;"	f	struct:RID
+reset	page.h	/^  void reset() {pageNo = -1; slotNo = -1;}$/;"	f	struct:RID
+Record	page.h	/^struct Record$/;"	s
+data	page.h	/^  void* data;$/;"	m	struct:Record
+length	page.h	/^  int length;$/;"	m	struct:Record
+slot_t	page.h	/^struct slot_t {$/;"	s
+offset	page.h	/^        short	offset;$/;"	m	struct:slot_t
+length	page.h	/^        short	length;  \/\/ equals -1 if slot is not in use$/;"	m	struct:slot_t
+PAGESIZE	page.h	/^const unsigned PAGESIZE = 1024;$/;"	v
+DPFIXED	page.h	/^const unsigned DPFIXED= sizeof(slot_t)+4*sizeof(short)+3*sizeof(int);$/;"	v
+Page	page.h	/^class Page {$/;"	c
+data	page.h	/^    char 	data[PAGESIZE - DPFIXED]; \/\/ all record data + slot array stored here$/;"	m	class:Page
+slot	page.h	/^    slot_t 	slot[1]; \/\/ first element of slot array - grows backwards!$/;"	m	class:Page
+slotCnt	page.h	/^    short	slotCnt; \/\/ number of slots in use;$/;"	m	class:Page
+freePtr	page.h	/^    short	freePtr; \/\/ offset of first free byte in data[]$/;"	m	class:Page
+freeSpace	page.h	/^    short	freeSpace; \/\/ number of bytes free in data[]$/;"	m	class:Page
+dummy	page.h	/^    short	dummy;	\/\/ for alignment purposes$/;"	m	class:Page
+prevPage	page.h	/^    int		prevPage; \/\/ backwards pointer$/;"	m	class:Page
+nextPage	page.h	/^    int		nextPage; \/\/ forwards pointer$/;"	m	class:Page
+curPage	page.h	/^    int		curPage;  \/\/ page number of current pointer$/;"	m	class:Page
+MAX	print.cpp	/^#define MAX(/;"	d	file:
+MIN	print.cpp	/^#define MIN(/;"	d	file:
+UT_computeWidth	print.cpp	/^const Status UT_computeWidth(const int attrCnt, $/;"	f
+UT_printRec	print.cpp	/^void UT_printRec(const int attrCnt, const AttrDesc attrs[], int *attrWidth,$/;"	f
+Print	print.cpp	/^Status Utilities::Print(string relation)$/;"	f	class:Utilities
+QUERY_H	query.h	/^#define QUERY_H$/;"	d
+Operators	query.h	/^class Operators$/;"	c
+Updates	query.h	/^class Updates$/;"	c
+ScanSelect	scanselect.cpp	/^Status Operators::ScanSelect(const string& result,       \/\/ Name of the output relation$/;"	f	class:Operators
+Select	select.cpp	/^Status Operators::Select(const string & result,      \/\/ name of the output relation$/;"	f	class:Operators
+SMJ	smj.cpp	/^Status Operators::SMJ(const string& result,           \/\/ Output relation name$/;"	f	class:Operators
+SNL	snl.cpp	/^Status Operators::SNL(const string& result,           \/\/ Output relation name$/;"	f	class:Operators
+MIN	sort.cpp	/^#define MIN(/;"	d	file:
+reccmp	sort.cpp	/^static int reccmp(char* p1, char* p2, int p1Len, int p2Len, Datatype type)$/;"	f	file:
+SR	sort.cpp	/^#define SR(/;"	d	file:
+intcmp	sort.cpp	/^static int intcmp(const void* p1, const void* p2)$/;"	f	file:
+floatcmp	sort.cpp	/^static int floatcmp(const void* p1, const void* p2)$/;"	f	file:
+stringcmp	sort.cpp	/^static int stringcmp(const void* p1, const void* p2)$/;"	f	file:
+SortedFile	sort.cpp	/^SortedFile::SortedFile(const string & fileName, $/;"	f	class:SortedFile
+sortFile	sort.cpp	/^Status SortedFile::sortFile()$/;"	f	class:SortedFile
+generateRun	sort.cpp	/^Status SortedFile::generateRun(int items)$/;"	f	class:SortedFile
+startScans	sort.cpp	/^Status SortedFile::startScans()$/;"	f	class:SortedFile
+next	sort.cpp	/^Status SortedFile::next(Record & rec)$/;"	f	class:SortedFile
+setMark	sort.cpp	/^Status SortedFile::setMark()$/;"	f	class:SortedFile
+gotoMark	sort.cpp	/^Status SortedFile::gotoMark()$/;"	f	class:SortedFile
+~SortedFile	sort.cpp	/^SortedFile::~SortedFile()$/;"	f	class:SortedFile
+SORT_H	sort.h	/^#define SORT_H$/;"	d
+rid	sort.h	/^  RID rid;                              \/\/ record id of current record$/;"	m	struct:__anon5
+field	sort.h	/^  char* field;                          \/\/ pointer to field$/;"	m	struct:__anon5
+length	sort.h	/^  int length;                           \/\/ length of field$/;"	m	struct:__anon5
+SORTREC	sort.h	/^} SORTREC;$/;"	t	typeref:struct:__anon5
+SortedFile	sort.h	/^class SortedFile {$/;"	c
+name	sort.h	/^    string name;                        \/\/ name of run file$/;"	m	struct:SortedFile::__anon6
+file	sort.h	/^    HeapFileScan* file;                 \/\/ ptr to sorted run of file$/;"	m	struct:SortedFile::__anon6
+valid	sort.h	/^    int valid;                          \/\/ TRUE if recPtr has a record$/;"	m	struct:SortedFile::__anon6
+rec	sort.h	/^    Record rec;$/;"	m	struct:SortedFile::__anon6
+rid	sort.h	/^    RID rid;                            \/\/ RID of current record of run$/;"	m	struct:SortedFile::__anon6
+mark	sort.h	/^    RID mark;                           \/\/ last marked spot (RID) in file$/;"	m	struct:SortedFile::__anon6
+RUN	sort.h	/^  } RUN;$/;"	t	class:SortedFile	typeref:struct:SortedFile::__anon6
+runs	sort.h	/^  std::vector<RUN> runs;                     \/\/ holds info about each sub-run$/;"	m	class:SortedFile
+file	sort.h	/^  HeapFileScan* file;                   \/\/ source file to sort$/;"	m	class:SortedFile
+fileName	sort.h	/^  string fileName;                      \/\/ name of source file to sort$/;"	m	class:SortedFile
+type	sort.h	/^  Datatype type;                        \/\/ type of sort attribute$/;"	m	class:SortedFile
+offset	sort.h	/^  int offset;                           \/\/ offset of sort attribute$/;"	m	class:SortedFile
+length	sort.h	/^  int length;                           \/\/ length of sort attribute$/;"	m	class:SortedFile
+buffer	sort.h	/^  SORTREC *buffer;                      \/\/ in-memory sort buffer$/;"	m	class:SortedFile
+maxItems	sort.h	/^  int maxItems;                         \/\/ max. # of items\/tuples in buffer$/;"	m	class:SortedFile
+numItems	sort.h	/^  int numItems;                         \/\/ current # of items in buffer$/;"	m	class:SortedFile
+soaps	sql/catalog.sql	/^CREATE TABLE soaps(soapid integer, name char(32), network char(4), rating double);$/;"	t
+soaps.soapid	sql/catalog.sql	/^CREATE TABLE soaps(soapid integer, name char(32), network char(4), rating double);$/;"	F
+soaps.name	sql/catalog.sql	/^CREATE TABLE soaps(soapid integer, name char(32), network char(4), rating double);$/;"	F
+soaps.network	sql/catalog.sql	/^CREATE TABLE soaps(soapid integer, name char(32), network char(4), rating double);$/;"	F
+soaps.rating	sql/catalog.sql	/^CREATE TABLE soaps(soapid integer, name char(32), network char(4), rating double);$/;"	F
+stars	sql/catalog.sql	/^CREATE TABLE stars(starid integer, real_name char(20), plays char(12), soapid integer);$/;"	t
+stars.starid	sql/catalog.sql	/^CREATE TABLE stars(starid integer, real_name char(20), plays char(12), soapid integer);$/;"	F
+stars.real_name	sql/catalog.sql	/^CREATE TABLE stars(starid integer, real_name char(20), plays char(12), soapid integer);$/;"	F
+stars.plays	sql/catalog.sql	/^CREATE TABLE stars(starid integer, real_name char(20), plays char(12), soapid integer);$/;"	F
+stars.soapid	sql/catalog.sql	/^CREATE TABLE stars(starid integer, real_name char(20), plays char(12), soapid integer);$/;"	F
+DA	sql/datamation.sql	/^CREATE TABLE DA (serial INTEGER, ikey INTEGER, filler CHAR(80), dkey DOUBLE);$/;"	t
+DA.serial	sql/datamation.sql	/^CREATE TABLE DA (serial INTEGER, ikey INTEGER, filler CHAR(80), dkey DOUBLE);$/;"	F
+DA.ikey	sql/datamation.sql	/^CREATE TABLE DA (serial INTEGER, ikey INTEGER, filler CHAR(80), dkey DOUBLE);$/;"	F
+DA.filler	sql/datamation.sql	/^CREATE TABLE DA (serial INTEGER, ikey INTEGER, filler CHAR(80), dkey DOUBLE);$/;"	F
+DA.dkey	sql/datamation.sql	/^CREATE TABLE DA (serial INTEGER, ikey INTEGER, filler CHAR(80), dkey DOUBLE);$/;"	F
+DB	sql/datamation.sql	/^CREATE TABLE DB (serial INTEGER, ikey INTEGER, filler CHAR(80), dkey DOUBLE);$/;"	t
+DB.serial	sql/datamation.sql	/^CREATE TABLE DB (serial INTEGER, ikey INTEGER, filler CHAR(80), dkey DOUBLE);$/;"	F
+DB.ikey	sql/datamation.sql	/^CREATE TABLE DB (serial INTEGER, ikey INTEGER, filler CHAR(80), dkey DOUBLE);$/;"	F
+DB.filler	sql/datamation.sql	/^CREATE TABLE DB (serial INTEGER, ikey INTEGER, filler CHAR(80), dkey DOUBLE);$/;"	F
+DB.dkey	sql/datamation.sql	/^CREATE TABLE DB (serial INTEGER, ikey INTEGER, filler CHAR(80), dkey DOUBLE);$/;"	F
+soaps	sql/insert.sql	/^CREATE TABLE soaps(soapid integer, name char(32),$/;"	t
+soaps.soapid	sql/insert.sql	/^CREATE TABLE soaps(soapid integer, name char(32),$/;"	F
+soaps.name	sql/insert.sql	/^CREATE TABLE soaps(soapid integer, name char(32),$/;"	F
+soaps.network	sql/insert.sql	/^CREATE TABLE soaps(soapid integer, name char(32),$/;"	F
+soaps.rating	sql/insert.sql	/^                   network char(4), rating double);$/;"	F
+stars	sql/insert.sql	/^CREATE TABLE stars(starid integer, real_name char(20),$/;"	t
+stars.starid	sql/insert.sql	/^CREATE TABLE stars(starid integer, real_name char(20),$/;"	F
+stars.real_name	sql/insert.sql	/^CREATE TABLE stars(starid integer, real_name char(20),$/;"	F
+stars.plays	sql/insert.sql	/^CREATE TABLE stars(starid integer, real_name char(20),$/;"	F
+stars.soapid	sql/insert.sql	/^                   plays char(12), soapid integer);$/;"	F
+UTILITY_H	utility.h	/^#define UTILITY_H$/;"	d
+Utilities	utility.h	/^class Utilities$/;"	c

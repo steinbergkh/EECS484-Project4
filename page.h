@@ -25,7 +25,7 @@ struct Record
 
 // slot structure
 struct slot_t {
-        short	offset;  
+        short	offset;
         short	length;  // equals -1 if slot is not in use
 };
 
@@ -35,18 +35,18 @@ const unsigned PAGESIZE = 1024;
 // subtracted from space availale for data.
 const unsigned DPFIXED= sizeof(slot_t)+4*sizeof(short)+3*sizeof(int);
 
-// Class definition for a minirel data page.   
+// Class definition for a minirel data page.
 // The design assumes that records are kept compacted when
 // deletions are performed. Notice, however, that the slot
-// array cannot be compacted.  
+// array cannot be compacted.
 //
-// Notice, this class does not delineate records by column, 
+// Notice, this class does not delineate records by column,
 // instead it relies on other parts of the database to ensure
 // correct byte offset of the various columns
 
 class Page {
 private:
-    char 	data[PAGESIZE - DPFIXED]; // all record data + slot array stored here 
+    char 	data[PAGESIZE - DPFIXED]; // all record data + slot array stored here
     slot_t 	slot[1]; // first element of slot array - grows backwards!
     short	slotCnt; // number of slots in use;
     short	freePtr; // offset of first free byte in data[]
@@ -66,7 +66,7 @@ public:
     void setPrevPage(const int pageNo); // sets value of prevPage to pageNo
     const short getFreeSpace() const; // returns amount of free space
 
-    // inserts a new record (rec) into the page, returns RID of record 
+    // inserts a new record (rec) into the page, returns RID of record
     const Status insertRecord(const Record & rec, RID& rid);
 
     // delete the record with the specified rid
@@ -76,7 +76,7 @@ public:
     // returns  NORECORDS if page contains no records.  Otherwise, returns OK
     const Status firstRecord(RID& firstRid) const;
 
-    // returns RID of next record on the page 
+    // returns RID of next record on the page
     // returns ENDOFPAGE if no more records exist on the page
     const Status nextRecord (const RID & curRid, RID& nextRid) const;
 

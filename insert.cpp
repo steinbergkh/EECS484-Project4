@@ -15,6 +15,30 @@ Status Updates::Insert(const string& relation,      // Name of the relation
                        const attrInfo attrList[])   // Value of attributes specified in INSERT statement
 {
     /* Your solution goes here */
+    Status status;
+    RelDesc rd;
+    AttrDesc *attrs = new AttrDesc();
+    int recLength = 0;
 
-    return OK;
+    // get attribute data
+    status = attrCat->getRelInfo(rd.relName, attrCnt, attrs);
+
+    // status check of getRelInfo
+    if (status != OK){
+      return status;
+   }
+
+   Record rec;
+   int i;
+
+   // get the record size
+   for(i = 0; i < attrCnt; i++) {
+     recLength += attrs[i].attrLen;
+   }
+   rec.data = malloc(recLength);
+   rec.length = recLength;
+
+   //
+
+    return status;
 }
