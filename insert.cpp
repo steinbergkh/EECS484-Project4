@@ -4,6 +4,15 @@
 #include <stdlib.h>
 #include <string.h>
 
+bool strEqual( const char * str1, const char * str2 ){
+   if (!strcmp(str1, str2)){ // strcmp returns 0 when strings are equal
+      return true;
+   }
+   else{
+      return false;
+   }
+}
+
 /*
  * Inserts a record into the specified relation
  *
@@ -91,13 +100,4 @@ Status Updates::Insert(const string& relation,      // Name of the relation
    }
 
     return status;
-}
-
-bool strEqual( const char * str1, const char * str2 ){
-   if (!strcmp(str1, str2)){ // strcmp returns 0 when strings are equal
-      return true;
-   }
-   else{
-      return false;
-   }
 }
