@@ -1,6 +1,5 @@
-#EECS 484 - Project 4: Minirel 2K Query Processor
-##Overview of Given Code
-
+#Overview of Given Code
+##Types
 
 ###attrInfo
 ```cpp
@@ -52,5 +51,91 @@ typedef struct {
 struct Record{
   void* data;
   int length;
+};
+```
+##Enums
+
+###DataType
+```cpp
+// These are the data types that minirel understands
+/*
+enum DataType {
+      SQLChar,      // SQL Char data type
+      SQLInteger,   // SQL Integer data type
+      SQLDouble     // SQL double data type
+   };
+*/
+
+// Given out in part2
+enum Datatype {INTEGER=0, DOUBLE=1, STRING=2 };
+```
+
+###Operator
+```cpp
+// A list of operations that are supported in predicates in minirel.
+enum Operator { LT, LTE, EQ, GTE, GT, NE, NOTSET };  // scan operators
+```
+
+###Status
+```cpp
+enum Status {
+
+// no error
+
+       OK = 0, NOTUSED1 = -999,
+
+// File and DB errors
+
+       BADFILEPTR, BADFILE, FILETABFULL, FILEOPEN, FILENOTOPEN,
+       UNIXERR, BADPAGEPTR, BADPAGENO, FILEEXISTS,
+
+// BufMgr and HashTable errors
+
+       BUFMAPERROR, BUFMAPNOTFOUND, BUFFEREXCEEDED, PAGENOTPINNED,
+       BADBUFFER, PAGEPINNED,
+
+// Page errors
+
+       NOSPACE,  NORECORDS,  ENDOFPAGE, INVALIDSLOTNO,
+
+// HeapFile errors
+
+       BADRID, BADRECPTR, BADSCANPARM, BADSCANID, SCANTABFULL, FILEEOF,
+
+// Index errors
+       BADINDEXPARM,
+
+// Hash Index errors
+
+       RECNOTFOUND, BUCKETFULL, DIROVERFLOW,
+       NONUNIQUEENTRY, NOMORERECS, NOCHARIDX,
+
+
+// Btree index errors
+
+       INDEXPAGEFULL, INDEXPAGENOTFULL, BADINDEXPAGEPOSITION,
+       INDEXLOADERROR, ENTRYNOTUNIQUE, EXPECTINGNONLEAFPAGE, SCANEXECUTING,
+       BADINDEXSCANPARM, NOSCANEXECUTING, ENDOFINDEXSCAN, NOTFOUNDINLEAF,
+       NOTFOUNDINNONLEAF, MERGEERROR,
+
+// SortedFile errors
+
+       BADSORTPARM, INSUFMEM,
+
+// Catalog errors
+
+       BADCATPARM, RELNOTFOUND, ATTRNOTFOUND,
+       NAMETOOLONG, DUPLATTR, RELEXISTS, NOINDEX,
+       INDEXEXISTS, ATTRTOOLONG,
+
+// Utility errors
+
+// Query errors
+
+       ATTRTYPEMISMATCH, TMP_RES_EXISTS,
+
+// do not touch filler -- add codes before it
+
+       NOTUSED2
 };
 ```

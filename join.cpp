@@ -16,7 +16,7 @@
  * 	an error code otherwise
  */
 
-Status Operators::Join(const string& result,           // Name of the output relation 
+Status Operators::Join(const string& result,           // Name of the output relation
                        const int projCnt,              // Number of attributes in the projection
     	               const attrInfo projNames[],     // List of projection attributes
     	               const attrInfo* attr1,          // Left attr in the join predicate
@@ -28,8 +28,8 @@ Status Operators::Join(const string& result,           // Name of the output rel
 	return OK;
 }
 
-// Function to compare two record based on the predicate. Returns 0 if the two attributes 
-// are equal, a negative number if the left (attrDesc1) attribute is less that the right 
+// Function to compare two record based on the predicate. Returns 0 if the two attributes
+// are equal, a negative number if the left (attrDesc1) attribute is less that the right
 // attribute, otherwise this function returns a positive number.
 int Operators::matchRec(const Record& outerRec,     // Left record
                         const Record& innerRec,     // Right record
@@ -51,12 +51,12 @@ int Operators::matchRec(const Record& outerRec,     // Left record
             memcpy(&tmpFloat1, (char *) outerRec.data + attrDesc1.attrOffset, sizeof(double));
             memcpy(&tmpFloat2, (char *) innerRec.data + attrDesc2.attrOffset, sizeof(double));
             floatDiff = tmpFloat1 - tmpFloat2;
-            return (fabs(floatDiff) < DOUBLEERROR) ? 0 : floatDiff;
+            return (fabs(floatDiff) < DOUBLEERROR) ? 0 : (floatDiff < 0?floor(floatDiff):ceil(floatDiff));
 
         case STRING:
             return strncmp(
-                (char *) outerRec.data + attrDesc1.attrOffset, 
-                (char *) innerRec.data + attrDesc2.attrOffset, 
+                (char *) outerRec.data + attrDesc1.attrOffset,
+                (char *) innerRec.data + attrDesc2.attrOffset,
                 MAX(attrDesc1.attrLen, attrDesc2.attrLen));
     }
 

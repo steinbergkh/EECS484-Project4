@@ -10,8 +10,8 @@
 // Compute widths of columns in attribute array.
 //
 
-const Status UT_computeWidth(const int attrCnt, 
-			     const AttrDesc attrs[], 
+const Status UT_computeWidth(const int attrCnt,
+			     const AttrDesc attrs[],
 			     int *&attrWidth)
 {
   attrWidth = new int [attrCnt];
@@ -31,8 +31,8 @@ const Status UT_computeWidth(const int attrCnt,
       // attrWidth[i] = MAX(namelen, 5);
       break;
     case STRING:
-      // For strings print at most 15 characters. 
-      // BUG: The MAX implies that if the length of the attribute name is greater 
+      // For strings print at most 15 characters.
+      // BUG: The MAX implies that if the length of the attribute name is greater
       //      than the type of the attribute, the subsequent print may print out garbage
       //      values
       attrWidth[i] = MIN(MAX(namelen, attrs[i].attrLen), 15);
@@ -70,7 +70,7 @@ void UT_printRec(const int attrCnt, const AttrDesc attrs[], int *attrWidth,
       printf("%-*.2f  ", attrWidth[i], tempf);
       break;
     default:
-      printf("%-*.*s  ", attrWidth[i], attrWidth[i], attr);
+      printf("%-*.*s  ", attrWidth[i], attrs[i].attrLen, attr);
       break;
     }
   }
