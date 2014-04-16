@@ -125,7 +125,7 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
       }
       RID recordID;
       // insert record
-      status = heapfile->insertRecord(record, recordID);
+      status = heapFile->insertRecord(record, recordID);
       if(status != OK){
          delete heapFile;
          return status;
