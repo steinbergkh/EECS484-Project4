@@ -5,6 +5,8 @@
 #include <string.h>
 #include <stdio.h>
 
+using namespace std;
+
 bool strEqual( const char * str1, const char * str2 ){
    if (!strcmp(str1, str2)){ // strcmp returns 0 when strings are equal
       return true;
@@ -28,7 +30,6 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
 {
    /* Your solution goes here */
    Status status;
-   RelDesc rd;
    AttrDesc *attrs;
    int recLength = 0;
 
