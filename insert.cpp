@@ -35,7 +35,12 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
    int attributeCountTrue = 0;
 
    // get attribute data
-   status = attrCat->getRelInfo(rd.relName, attributeCountTrue, attrs);
+   status = attrCat->getRelInfo(relation, attributeCountTrue, attrs);
+
+   // status check of getRelInfo
+   if (status != OK){
+      return status;
+   }
 
    // check if number of attributes is right
    // (true if either missing some or has duplicates)
