@@ -3,6 +3,7 @@
 #include "index.h"
 #include <stdlib.h>
 #include <string.h>
+#include <stdio.h>
 
 bool strEqual( const char * str1, const char * str2 ){
    if (!strcmp(str1, str2)){ // strcmp returns 0 when strings are equal
@@ -39,24 +40,27 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
    // check if number of attributes is right
    // (true if either missing some or has duplicates)
    if (attributeCountTrue != attrCnt ){
+      cout << "attributeCountTrue == "<< attributeCountTrue << "attrCnt == " << attrCnt << endl;
       if (attributeCountTrue > attrCnt){ // missing some
-         status = ATTRTYPEMISMATCH;      }
-         else{ // duplicate
-            status = DUPLATTR;
-         }
+         status = ATTRTYPEMISMATCH;
       }
-
-      // status check of getRelInfo
-      if (status != OK){
-         return status;
+      else{ // duplicate
+         cout << "attribute count true is less than attribute counts entered" << endl;
+         status = DUPLATTR;
       }
+   }
+
+   // status check of getRelInfo
+   if (status != OK){
+      return status;
+   }
 
 
-      // TODO if no value is specified for an attribute in attrList, you should reject the insertion
-      // status = ATTRNOTFOUND; //????
+   // TODO if no value is specified for an attribute in attrList, you should reject the insertion
+   // status = ATTRNOTFOUND; //????
 
-      Record record;
-      int i;
+   Record record;
+   int i;
 
       // get the record size
       for(i = 0; i < attrCnt; i++) {
@@ -89,6 +93,7 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
                }
                else if (attrFound[i_attribute]){
                   // attribute was already matched with other attrInfo
+                  cout << "attribute was already matched with other attrInfo" << endl;
                   status = DUPLATTR;
                   break;
                }
