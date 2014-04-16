@@ -29,10 +29,10 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
    /* Your solution goes here */
    Status status;
    RelDesc rd;
-   AttrDesc *attrs = new AttrDesc();
+   AttrDesc *attrs;
    int recLength = 0;
 
-   int attributeCountTrue = attrCnt;
+   int attributeCountTrue = 0;
 
    // get attribute data
    status = attrCat->getRelInfo(rd.relName, attributeCountTrue, attrs);
