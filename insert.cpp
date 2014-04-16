@@ -116,7 +116,7 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
       }
 
       // INSERT THE RECORD INTO THE HEAPFILE
-      HeapFile heapFile = new HeapFile(relation, status);
+      HeapFile *heapFile = new HeapFile(relation, status);
 
       // if error, delete allocated HeapFile and return the error status
       if(status != OK){
@@ -137,9 +137,9 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
       for(i = 0; i < attrCnt; i++) {
          if(attrs[i].indexed){ // there is an index on the attribute
 
-            DataType attrDataType = (DataType)attrs[i].attrType; // cast to ENUM DataType
-            Index attrIndex = new Index(relation, attrs[i].attrOffset,
-                                       attrs[i].attrLen, attrDataType, 0, status);
+            Datatype attrDatatype = (Datatype)attrs[i].attrType; // cast to ENUM Datatype
+            Index *attrIndex = new Index(relation, attrs[i].attrOffset,
+                                       attrs[i].attrLen, attrDatatype, 0, status);
 
             // check to make sure nothin went wrong
             if(status != OK){
