@@ -25,7 +25,7 @@ Status Operators::Select(const string & result,      // name of the output relat
    resultRel.attrCnt = projCnt // projected attributes are the
                               // attributes of the result relation
    resultRel.indexCnt = 0; // no indexes on the result relation b/c it's temp
-
+   AttrDesc * resultAttrDesc = new AttrDesc[projCnt];
 
 
    return OK;
