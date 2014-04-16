@@ -142,7 +142,6 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
          return status;
       }
       delete heapFile;
-      cout << "RecordID of new record is " << recordID << endl;
 
       // RECORD ID NEEDS TO BE INSERTED IN EACH INDEX FOR THE RELATION
       // 1. check catalogs to see if there is one or more indexes for the relation
