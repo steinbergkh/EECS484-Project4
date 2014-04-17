@@ -30,7 +30,7 @@ Status Operators::Select(const string & result,      // name of the output relat
    for(int i = 0; i < outputRelationDesc.attrCnt; i++){
       string projRelName = projNames[i].relName;
       string projAttrName = projNames[i].attrName;
-      status = attrCat->getInfo(projRelName, projAttrName, &projectedAttrDesc[i]);
+      status = attrCat->getInfo(projRelName, projAttrName, *projectedAttrDesc[i]);
 
       if(status != OK){
          delete[] projectedAttrDesc;
@@ -43,7 +43,9 @@ Status Operators::Select(const string & result,      // name of the output relat
    // if attr is null, this means that the selection is unconditional
    // in people words, there's no WHERE clause
    if(attr != NULL){
-      status = attrCat->getInfo(string(attr->relName), string(attr->attrName), whereAttrDesc);
+      string selectAttrRelName = attr->relName;
+      string selectAttrName = attr->attrName;
+      status = attrCat->getInfo(selectAttrRelName, selectAttrName, *whereAttrDesc);
       if(status != OK){
          delete[] projectedAttrDesc;
          return status;
