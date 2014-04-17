@@ -117,14 +117,10 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
 
                   // fill in data with values from INSERT
                   recValAddr += attrs[i_attribute].attrOffset;
-                  cout << "ATTRIBUTE NAME: " << attrList[i_insert].attrName
-                        << " VALUE: ";
-                        for(int i = 0; i < attrList[i_insert].attrLen ; ++i){
-                           char val = *((char*)attrList[i_insert].attrValue + i);
-                           cout << val;
-                        }
-                        cout << '\n';
-                  memcpy(recValAddr, attrList[i_insert].attrValue, attrs[i_attribute].attrLen);
+
+                  memcpy((char *)record.data + attrs[i_attribute].attrOffset,
+                        attrList[i_insert].attrValue,
+                        attrs[i_attribute].attrLen);
                }
             }
          }
