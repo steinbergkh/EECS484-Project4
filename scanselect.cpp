@@ -83,9 +83,6 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
         delete heapFileScan;
         return OK;
      }
-
-
   }
-
   return OK;
 }

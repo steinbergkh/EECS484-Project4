@@ -21,7 +21,8 @@ Status Operators::Select(const string & result,      // name of the output relat
    int resultAttrsLength = 0;
    Status status;
    AttrDesc* resultAttrDesc = new AttrDesc[projCnt];
-
+   
+   // TODO: write checks to make sure that attr->attrType == the type of the contents of attrValue
 
    for(int i = 0; i < projCnt; i++){
 

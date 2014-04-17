@@ -63,7 +63,7 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
    }
 
 
-   // TODO if no value is specified for an attribute in attrList, you should reject the insertion
+   // TODO: if no value is specified for an attribute in attrList, you should reject the insertion
    // status = ATTRNOTFOUND; //????
 
    Record record;
@@ -88,8 +88,11 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
 
 
       int i_attribute, i_insert;
-      void* recValAddr = (void *)record.data;
+      char* recValAddr = (char *)record.data;
       for (i_attribute = 0 ; i_attribute < attrCnt ; ++i_attribute){
+         if (status != OK){
+            return status;
+         }
          for (i_insert = 0 ; i_insert < attrCnt ; ++i_insert){
             if(!dataInserted[i_insert]
             && strEqual( attrs[i_attribute].attrName, attrList[i_insert].attrName)){
@@ -114,6 +117,8 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
 
                   // fill in data with values from INSERT
                   recValAddr += attrs[i_attribute].attrOffset;
+                  cout << "ATTRIBUTE NAME: " << attrList[i_insert].attrName
+                        << " VALUE: " << attrList[i_insert].attrValue << endl;
                   memcpy(recValAddr, attrList[i_insert].attrValue, attrs[i_attribute].attrLen);
                }
             }
