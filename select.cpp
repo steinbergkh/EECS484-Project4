@@ -20,7 +20,7 @@ Status Operators::Select(const string & result,      // name of the output relat
    AttrDesc * whereAttrDesc;
    RelDesc outputRelationDesc;
    int recordLength = 0;
-   Status status OK;
+   Status status;
    AttrDesc * projectedAttrDesc = new AttrDesc[projCnt];
 
    strcpy(outputRelationDesc.relName, result);
