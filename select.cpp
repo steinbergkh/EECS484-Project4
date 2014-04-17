@@ -58,7 +58,7 @@ Status Operators::Select(const string & result,      // name of the output relat
       }
    }
    else{ // there's no where clause doe, so we gotta scan
-      &whereAttrDesc = NULL; // there's no where clause so yeah
+      *whereAttrDesc = NULL; // there's no where clause so yeah
       attrValue = NULL; // should probs be null already
                         // since it has no value but just in case!
       status = ScanSelect(result, projCnt, resultAttrDesc, &whereAttrDesc, op, attrValue, resultAttrsLength);
