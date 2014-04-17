@@ -2,6 +2,7 @@
 #include "query.h"
 #include "index.h"
 #include "string.h"
+#include "stdlib.h"
 
 /*
  * A simple scan select using a heap file scan
@@ -22,7 +23,7 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
   HeapFile *heapFile = new HeapFile(result, status);
 
   if (status != OK){
-     delete heapFile
+     delete heapFile;
      return status;
   }
 
@@ -61,10 +62,10 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
      if (status != OK){ // this means there wasn't a next record to grab
         heapFileScan->endScan();
         delete heapFile;
-        delete HeapFileScan;
+        delete heapFileScan;
         return OK;
      }
-     resultRecord.data = malloc(recLen); // allocate enough room for all our shtuff
+     resultRecord.data = malloc(reclen); // allocate enough room for all our shtuff
 
      resultRecOffset = 0;
      for (int i = 0; i < projCnt ; ++i){
@@ -73,13 +74,13 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
               projNames[i].attrLen);
         resultRecOffset += projNames[i].attrLen;
      }
-     resultRecord.length = resultRecOffset // should be equal to the val of
+     resultRecord.length = resultRecOffset; // should be equal to the val of
                                            // the last offset plus it's length
      heapFile->insertRecord(resultRecord, resultRID);
      if (status != OK){ // this means there was an issue
         free(resultRecord.data);
         delete heapFile;
-        delete HeapFileScan;
+        delete heapFileScan;
         return OK;
      }
 
