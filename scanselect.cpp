@@ -1,6 +1,7 @@
 #include "catalog.h"
 #include "query.h"
 #include "index.h"
+#include "string.h"
 
 /*
  * A simple scan select using a heap file scan
@@ -18,9 +19,10 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
 
   /* Your solution goes here */
   Status status;
-  HeapFile(result, status);
+  HeapFile *heapFile = new HeapFile(result, status);
 
   if (status != OK){
+     delete heapFile
      return status;
   }
 
@@ -41,11 +43,48 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
   }
 
   if (status != OK){
+     delete heapFile;
+     delete heapFileScan;
      return status;
   }
 
   // now we gotta get matching records from our
   // heapFileScans and put them in our result relation
+  RID nextRID, resultRID;
+  Record nextRecord, resultRecord;
+  int resultRecOffset;
+
+  while(true){
+     // grab the next record
+     status = heapFileScan->scanNext(nextRID, nextRecord);
+
+     if (status != OK){ // this means there wasn't a next record to grab
+        heapFileScan->endScan();
+        delete heapFile;
+        delete HeapFileScan;
+        return OK;
+     }
+     resultRecord.data = malloc(recLen); // allocate enough room for all our shtuff
+
+     resultRecOffset = 0;
+     for (int i = 0; i < projCnt ; ++i){
+        memcpy(resultRecord.data + resultRecOffset, // should point to end of last attr in new record
+              nextRecord.data + projNames[i].attrOffset,
+              projNames[i].attrLen);
+        resultRecOffset += projNames[i].attrLen;
+     }
+     resultRecord.length = resultRecOffset // should be equal to the val of
+                                           // the last offset plus it's length
+     heapFile->insertRecord(resultRecord, resultRID);
+     if (status != OK){ // this means there was an issue
+        free(resultRecord.data);
+        delete heapFile;
+        delete HeapFileScan;
+        return OK;
+     }
+
+
+  }
 
   return OK;
 }
