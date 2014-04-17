@@ -54,7 +54,7 @@ Status Operators::Select(const string & result,      // name of the output relat
    }
 
    // if it's not an equality operation -> use scan select
-   ----  OR  ----
+   // ----  OR  ----
    // if it's not indexed -> use scan select
    if(op != EQ || !attrDesc.indexed){
       status = ScanSelect(result, projCnt, projectedAttrDesc, whereAttrDesc, op, attrValue, recordLength);
