@@ -20,6 +20,10 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
   Status status;
   Heapfile(result, status);
 
+  if (status != OK){
+     return status;
+  }
+
   HeapFileScan *heapFileScan;
   if(attrDesc){ //where clause exists -> gotta filter
     Datatype projAttrType = (Datatype)attrDesc->attrType;
@@ -36,7 +40,12 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
                             (Operator)0);
   }
 
-  // TODO check status here!
+  if (status != OK){
+     return status;
+  }
+
+  // now we gotta get matching records from our
+  // heapFileScans and put them in our result relation
 
   return OK;
 }
