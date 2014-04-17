@@ -18,7 +18,7 @@ bool strEqual( const char * str1, const char * str2 ){
 }
 
 /*
-* Inserts a record into the specified relation
+* Inserts a record into the specified
 *
 * Returns:
 * 	OK on success
@@ -172,6 +172,6 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
          }
       }
 
-      Print(relation);
+      Utilities::Print(relation);
       return status;
    }
