@@ -40,7 +40,7 @@ Status Operators::Select(const string & result,      // name of the output relat
    if(attr != NULL){
       string selectAttrRelName = attr->relName;
       string selectAttrName = attr->attrName;
-      status = attrCat->getInfo(selectAttrRelName, selectAttrName, *whereAttrDesc);
+      status = attrCat->getInfo(selectAttrRelName, selectAttrName, whereAttrDesc);
       if(status != OK){
          delete[] resultAttrDesc;
          return status;
@@ -51,17 +51,17 @@ Status Operators::Select(const string & result,      // name of the output relat
       // if it's not indexed -> use scan select
 
       if(op != EQ || !whereAttrDesc.indexed){
-         status = ScanSelect(result, projCnt, resultAttrDesc, whereAttrDesc, op, attrValue, resultAttrsLength);
+         status = ScanSelect(result, projCnt, resultAttrDesc, &whereAttrDesc, op, attrValue, resultAttrsLength);
       }
       else{
-         status = IndexSelect(result, projCnt, resultAttrDesc, whereAttrDesc, op, attrValue, resultAttrsLength);
+         status = IndexSelect(result, projCnt, resultAttrDesc, &whereAttrDesc, op, attrValue, resultAttrsLength);
       }
    }
    else{ // there's no where clause doe, so we gotta scan
       whereAttrDesc = NULL; // there's no where clause so yeah
       attrValue = NULL; // should probs be null already
                         // since it has no value but just in case!
-      status = ScanSelect(result, projCnt, resultAttrDesc, whereAttrDesc, op, attrValue, resultAttrsLength);
+      status = ScanSelect(result, projCnt, resultAttrDesc, &whereAttrDesc, op, attrValue, resultAttrsLength);
    }
 
    if(status != OK){
