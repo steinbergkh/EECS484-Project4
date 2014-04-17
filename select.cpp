@@ -17,30 +17,22 @@ Status Operators::Select(const string & result,      // name of the output relat
                         const Operator op,         // predicate operation
                         const void *attrValue)     // literal value in the predicate
 {
-   AttrDesc* whereAttrDesc;
-   RelDesc outputRelationDesc;
-   int recordLength = 0;
+   AttrDesc whereAttrDesc;
+   int resultAttrsLength = 0;
    Status status;
-   AttrDesc* projectedAttrDesc = new AttrDesc[projCnt];
+   AttrDesc* resultAttrDesc = new AttrDesc[projCnt];
 
-   strcpy(outputRelationDesc.relName, result.c_str());
-   outputRelationDesc.attrCnt = projCnt;
-   outputRelationDesc.indexCnt = 0;
 
-   for(int i = 0; i < outputRelationDesc.attrCnt; i++){
-      AttrDesc tempAttrDesc;
-      string projRelName = projNames[i].relName;
-      string projAttrName = projNames[i].attrName;
-      status = attrCat->getInfo(projRelName, projAttrName, tempAttrDesc);
+   for(int i = 0; i < projCnt; i++){
+
+      status = attrCat->getInfo(projNames[i].relName, projNames[i].attrName, resultAttrDesc[i]);
+
       if(status != OK){
-         delete[] projectedAttrDesc;
+         delete[] resultAttrDesc;
          return status;
       }
-      // UGGHH HIOSDHJFOIJ why can't we just pass this through getInfo
-      // and not have to copy everything by itself RIOUJSODIJF so. much. h8.
-      projectedAttrDesc[i] = tempAttrDesc;
-      projectedAttrDesc[i].indexed = 0;
-      recordLength += projectedAttrDesc[i].attrLen;
+
+      resultAttrsLength += resultAttrDesc[i].attrLen;
    }
 
    // if attr is null, this means that the selection is unconditional
@@ -50,28 +42,33 @@ Status Operators::Select(const string & result,      // name of the output relat
       string selectAttrName = attr->attrName;
       status = attrCat->getInfo(selectAttrRelName, selectAttrName, *whereAttrDesc);
       if(status != OK){
-         delete[] projectedAttrDesc;
+         delete[] resultAttrDesc;
          return status;
       }
+
+      // if it's not an equality operation -> use scan select
+      // ----  OR  ----
+      // if it's not indexed -> use scan select
+
+      if(op != EQ || !whereAttrDesc.indexed){
+         status = ScanSelect(result, projCnt, resultAttrDesc, whereAttrDesc, op, attrValue, resultAttrsLength);
+      }
+      else{
+         status = IndexSelect(result, projCnt, resultAttrDesc, whereAttrDesc, op, attrValue, resultAttrsLength);
+      }
    }
-   else{ // there's no where clause doe
-      whereAttrDesc = NULL;
+   else{ // there's no where clause doe, so we gotta scan
+      whereAttrDesc = NULL; // there's no where clause so yeah
+      attrValue = NULL; // should probs be null already
+                        // since it has no value but just in case!
+      status = ScanSelect(result, projCnt, resultAttrDesc, whereAttrDesc, op, attrValue, resultAttrsLength);
    }
 
-   // if it's not an equality operation -> use scan select
-   // ----  OR  ----
-   // if it's not indexed -> use scan select
-   if(op != EQ || !whereAttrDesc.indexed){
-      status = ScanSelect(result, projCnt, projectedAttrDesc, whereAttrDesc, op, attrValue, recordLength);
-   }
-   else{
-      status = IndexSelect(result, projCnt, projectedAttrDesc, whereAttrDesc, op, attrValue, recordLength);
-   }
    if(status != OK){
-      delete[] projectedAttrDesc;
+      delete[] resultAttrDesc;
       return status;
    }
 
-   delete[] projectedAttrDesc;
+   delete[] resultAttrDesc;
    return OK;
 }
