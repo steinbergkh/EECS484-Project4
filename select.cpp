@@ -17,25 +17,28 @@ Status Operators::Select(const string & result,      // name of the output relat
                         const Operator op,         // predicate operation
                         const void *attrValue)     // literal value in the predicate
 {
-   AttrDesc * whereAttrDesc;
+   AttrDesc* whereAttrDesc;
    RelDesc outputRelationDesc;
    int recordLength = 0;
    Status status;
-   AttrDesc * projectedAttrDesc = new AttrDesc[projCnt];
+   AttrDesc* projectedAttrDesc = new AttrDesc[projCnt];
 
    strcpy(outputRelationDesc.relName, result.c_str());
    outputRelationDesc.attrCnt = projCnt;
    outputRelationDesc.indexCnt = 0;
 
    for(int i = 0; i < outputRelationDesc.attrCnt; i++){
+      AttrDesc tempAttrDesc;
       string projRelName = projNames[i].relName;
       string projAttrName = projNames[i].attrName;
-      status = attrCat->getInfo(projRelName, projAttrName, *projectedAttrDesc[i]);
-
+      status = attrCat->getInfo(projRelName, projAttrName, tempAttrDesc);
       if(status != OK){
          delete[] projectedAttrDesc;
          return status;
       }
+      // UGGHH HIOSDHJFOIJ why can't we just pass this through getInfo
+      // and not have to copy everything by itself RIOUJSODIJF so. much. h8.
+      projectedAttrDesc[i] = tempAttrDesc;
       projectedAttrDesc[i].indexed = 0;
       recordLength += projectedAttrDesc[i].attrLen;
    }
@@ -52,13 +55,13 @@ Status Operators::Select(const string & result,      // name of the output relat
       }
    }
    else{ // there's no where clause doe
-   whereAttrDesc = NULL;
+      whereAttrDesc = NULL;
    }
 
    // if it's not an equality operation -> use scan select
    // ----  OR  ----
    // if it's not indexed -> use scan select
-   if(op != EQ || !attrDesc.indexed){
+   if(op != EQ || !whereAttrDesc.indexed){
       status = ScanSelect(result, projCnt, projectedAttrDesc, whereAttrDesc, op, attrValue, recordLength);
    }
    else{
