@@ -1,6 +1,7 @@
 #include "catalog.h"
 #include "query.h"
 #include "index.h"
+#include "utility.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
@@ -171,6 +172,6 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
          }
       }
 
-
+      Print(relation);
       return status;
    }
