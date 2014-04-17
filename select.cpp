@@ -23,14 +23,14 @@ Status Operators::Select(const string & result,      // name of the output relat
    Status status;
    AttrDesc * projectedAttrDesc = new AttrDesc[projCnt];
 
-   strcpy(outputRelationDesc.relName, result);
+   strcpy(outputRelationDesc.relName, result.c_str());
    outputRelationDesc.attrCnt = projCnt;
    outputRelationDesc.indexCnt = 0;
 
    for(int i = 0; i < outputRelationDesc.attrCnt; i++){
       string projRelName = projNames[i].relName;
       string projAttrName = projNames[i].attrName;
-      status = attrCat->getInfo(projRelName, projAttrName, projectedAttrDesc[i]);
+      status = attrCat->getInfo(projRelName, projAttrName, &projectedAttrDesc[i]);
 
       if(status != OK){
          delete[] projectedAttrDesc;
