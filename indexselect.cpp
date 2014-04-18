@@ -15,7 +15,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
   cout << "Algorithm: Index Select" << endl;
 
   /* Your solution goes here */
-  /*Status status;
+  Status status;
 
   HeapFile *heapFile = new HeapFile(result, status);
   Datatype projAttrType = (Datatype)attrDesc->attrType;
@@ -33,7 +33,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
 
   Datatype indexDatatype = Datatype(attrDesc->attrType); // static cast attrType                                                      // from int to Datatype
   string indexRelName = attrDesc->relName;
-  Index *attrIndex = new Index(indexRelName,    // name of the relation being indexed
+  Index *attrIndex = &Index(indexRelName,    // name of the relation being indexed
                         attrDesc->attrOffset,   // offset of the attribute being indexed
                         attrDesc->attrLen,      // length of the attribute being indexed
                         indexDatatype,          // type of the attribute being indexed
@@ -66,11 +66,11 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
       status = attrIndex->scanNext(nextRID);
 
       if (status != OK){ // this means there wasn't a next record to grab
+         attrIndex->endScan();
          delete heapFile;
          heapFile = NULL;
          delete heapFileScan;
          heapFileScan = NULL;
-         attrIndex->endScan();
          return OK;
       }
 
@@ -95,7 +95,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
          heapFileScan = NULL;
          return status;
       }
-   }*/
+   }
 
    return OK;
 }
