@@ -47,6 +47,11 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
    Record nextRecord, resultRecord;
    int resultRecOffset;
 
+   status = attrIndex->startScan(projAttrVal);
+   if (status != OK){ // this means there wasn't a next record to grab
+      attrIndex->endScan();
+      return OK;
+   }
    while(true){
       // grab the next record
       status = attrIndex->scanNext(nextRID);
