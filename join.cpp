@@ -59,13 +59,24 @@ Status Operators::Join(const string& result,        // Name of the output relati
    }
 
    if (op == EQ){ // if equal, must check for index on either attribute
-      if (leftAttrDesc.indexed || rightAttrDesc.indexed){
-         // there's an index on either attr1 or attr2, so we
-         // can use INDEX NESTED LOOP JOIN
+
+      // INL says it evaluates joins with an index on the inner/right relation
+      // so if it's an index on the outer (left) relation, we switch the two
+      // cuz we $m@r+.
+
+      if (rightAttrDesc.indexed){
+         // there's an index on attr2, so we can use INDEX NESTED LOOP JOIN
+
          status = INL(result, projCnt, projAttrDesc, leftAttrDesc, op, rightAttrDesc, recordLength);
+      }
+      else if(leftAttrDesc.indexed){
+         // there's an index on attr1, so we can use INDEX NESTED LOOP JOIN
+
+         status = INL(result, projCnt, projAttrDesc, rightAttrDesc, op, leftAttrDesc, recordLength);
       }
       else{
          // no index, but it is an equi-join, so we use SORT MERGE JOIN
+
          status = SMJ(result, projCnt, projAttrDesc, leftAttrDesc, op, rightAttrDesc, recordLength);
       }
    }
