@@ -63,6 +63,7 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
      status = heapFileScan->scanNext(nextRID, nextRecord);
 
      if (status != OK){ // this means there wasn't a next record to grab
+        free(resultRecord.data);
         heapFileScan->endScan();
         delete heapFile;
         heapFile= NULL;
@@ -83,6 +84,7 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
                                            // the last offset plus it's length
      heapFile->insertRecord(resultRecord, resultRID);
      if (status != OK){ // this means there was an issue inserting the record
+        free(resultRecord.data);
         delete heapFile;
         heapFile= NULL;
         delete heapFileScan;

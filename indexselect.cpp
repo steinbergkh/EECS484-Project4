@@ -78,6 +78,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
 
       if (status != OK){ // this means there wasn't a next record to grab
          attrIndex->endScan();
+         free(resultRecord.data);
          delete heapFile;
          heapFile = NULL;
          delete heapFileScan;
@@ -85,7 +86,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
          return OK;
       }
 
-      resultRecord.data = new char[reclen]; // allocate enough room for all our shtuff
+      resultRecord.data = malloc(reclen); // allocate enough room for all our shtuff
 
       resultRecOffset = 0;
       for (int i = 0; i < projCnt ; ++i){
@@ -98,6 +99,8 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
                                             // the last offset plus it's length
       heapFile->insertRecord(resultRecord, resultRID);
       if (status != OK){ // this means there was an issue
+         attrIndex->endScan();
+         free(resultRecord.data);
          delete heapFile;
          heapFile = NULL;
          delete heapFileScan;

@@ -73,6 +73,7 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
       for(i = 0; i < attrCnt; i++) {
          recLength += attrs[i].attrLen;
       }
+      record.data = malloc(recLength); // REMEMBER TO FREE!
       record.length = recLength;
 
       // set to true at index where attribute was found
@@ -126,6 +127,7 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
          // if bad things happened, we free the data previously allocated
          // for the record and return the status error
          if (status != OK){
+            free(record.data);
             return status;
          }
 
@@ -163,6 +165,7 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
             // check to make sure nothin went wrong
             if(status != OK){
                delete attrIndex;
+               attrIndex = NULL;
                return status;
             }
 
@@ -171,11 +174,13 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
             // check to make sure nothin went wrong
             if(status != OK){
                delete attrIndex;
+               attrIndex = NULL;
                return status;
             }
 
             // free up dat mem
             delete attrIndex;
+            attrIndex = NULL;
          }
       }
 
