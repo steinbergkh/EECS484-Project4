@@ -149,18 +149,18 @@ Status Operators::INL(const string& result,           // Name of the output rela
 
          resultRecOffset = 0;
          for (int i = 0; i < projCnt ; ++i){
-            if (projNames[i].relName == attrDesc1.relName){
+            if (attrDescArray[i].relName == attrDesc1.relName){
                // this attr in result record comes from relation of the left attr
                memcpy(resultRecord.data + resultRecOffset, // should point to end of last attr in new record
-                        leftRecord.data + projNames[i].attrOffset,
-                        projNames[i].attrLen);
+                        leftRecord.data + attrDescArray[i].attrOffset,
+                        attrDescArray[i].attrLen);
             }
             else{ // this attr in result record comes from relation of the right attr
                memcpy(resultRecord.data + resultRecOffset, // should point to end of last attr in new record
-                        rightRecord.data + projNames[i].attrOffset,
-                        projNames[i].attrLen);
+                        rightRecord.data + attrDescArray[i].attrOffset,
+                        attrDescArray[i].attrLen);
             }
-            resultRecOffset += projNames[i].attrLen;
+            resultRecOffset += attrDescArray[i].attrLen;
          }
 
          resultRecord.length = resultRecOffset; // should be equal to the val of
