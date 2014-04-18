@@ -40,6 +40,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
 
    if (status != OK){
       delete heapFile;
+      delete heapFileScan;
       return status;
    }
    // this func is only called if there is an index on the relation "indexRelName"
@@ -62,13 +63,14 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
 
       if (status != OK){ // this means there wasn't a next record to grab
          delete heapFile;
+         delete heapFileScan;
          attrIndex->endScan();
          return OK;
       }
 
       heapFileScan->getRandomRecord(nextRID, nextRecord);
 
-      resultRecord.data = malloc(reclen); // allocate enough room for all our shtuff
+      resultRecord.data = new char[reclen]; // allocate enough room for all our shtuff
 
       resultRecOffset = 0;
       for (int i = 0; i < projCnt ; ++i){
@@ -82,6 +84,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
       heapFile->insertRecord(resultRecord, resultRID);
       if (status != OK){ // this means there was an issue
          delete heapFile;
+         delete heapFileScan;
          return status;
       }
    }
