@@ -148,6 +148,8 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
          heapFile = NULL;
          return status;
       }
+      delete heapFile;
+      heapFile = NULL;
 
       // RECORD ID NEEDS TO BE INSERTED IN EACH INDEX FOR THE RELATION
       // 1. check catalogs to see if there is one or more indexes for the relation
