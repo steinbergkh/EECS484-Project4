@@ -24,6 +24,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
                                   projAttrType, projAttrVal, op, status);
 
   if (status != OK){
+     delete heapFile;
      delete heapFileScan;
      return status;
   }
@@ -38,7 +39,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
                         status);        // return error codes
 
    if (status != OK){
-      delete heapFileScan;
+      delete heapFile;
       return status;
    }
    // this func is only called if there is an index on the relation "indexRelName"
@@ -60,7 +61,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
       status = attrIndex->scanNext(nextRID);
 
       if (status != OK){ // this means there wasn't a next record to grab
-         delete heapFileScan;
+         delete heapFile;
          attrIndex->endScan();
          return OK;
       }
@@ -80,7 +81,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
                                             // the last offset plus it's length
       heapFile->insertRecord(resultRecord, resultRID);
       if (status != OK){ // this means there was an issue
-         delete heapFileScan;
+         delete heapFile;
          return status;
       }
    }
