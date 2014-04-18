@@ -99,7 +99,7 @@ Status Operators::INL(const string& result,           // Name of the output rela
           ------   INDEX SCAN ON RIGHT ATTR    ------
           -------------------------------------------  */
 
-      char *indexAttrVal = malloc(attrDesc1.attrLen);
+      void *indexAttrVal = malloc(attrDesc1.attrLen);
       strcpy(indexAttrVal, ((char *)leftRecord.data + attrDesc1.attrOffset));
 
       HeapFileScan *heapFileScan2 = new HeapFileScan(attrDesc2.relName,
