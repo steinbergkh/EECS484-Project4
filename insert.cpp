@@ -73,7 +73,6 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
       for(i = 0; i < attrCnt; i++) {
          recLength += attrs[i].attrLen;
       }
-      record.data = malloc(recLength); // REMEMBER TO FREE!
       record.length = recLength;
 
       // set to true at index where attribute was found
@@ -127,7 +126,6 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
          // if bad things happened, we free the data previously allocated
          // for the record and return the status error
          if (status != OK){
-            free(record.data);
             return status;
          }
 
@@ -150,8 +148,6 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
          heapFile = NULL;
          return status;
       }
-      delete heapFile;
-      heapFile = NULL;
 
       // RECORD ID NEEDS TO BE INSERTED IN EACH INDEX FOR THE RELATION
       // 1. check catalogs to see if there is one or more indexes for the relation
@@ -181,6 +177,6 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
          }
       }
 
-      Utilities::Print(relation);
+      //Utilities::Print(relation);
       return status;
    }
