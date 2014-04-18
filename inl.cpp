@@ -100,13 +100,13 @@ Status Operators::INL(const string& result,           // Name of the output rela
           -------------------------------------------  */
 
       void *indexAttrVal = malloc(attrDesc1.attrLen);
-      strcpy(indexAttrVal, ((char *)leftRecord.data + attrDesc1.attrOffset));
+      strcpy((char *)indexAttrVal, ((char *)leftRecord.data + attrDesc1.attrOffset));
 
       HeapFileScan *heapFileScan2 = new HeapFileScan(attrDesc2.relName,
                                                  attrDesc2.attrOffset,
                                                  attrDesc2.attrLen,
                                                  attrType2,
-                                                 indexAttrVal,
+                                                 (char *)indexAttrVal,
                                                  op,
                                                  status);
 
