@@ -25,7 +25,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
 
   if (status != OK){
      delete heapFile;
-     heapfile = NULL;
+     heapFile= NULL;
      delete heapFileScan;
      heapFileScan = NULL;
      return status;

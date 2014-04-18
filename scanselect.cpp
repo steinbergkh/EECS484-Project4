@@ -24,7 +24,7 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
 
   if (status != OK){
      delete heapFile;
-heapfile = NULL;
+heapFile= NULL;
      return status;
   }
 
@@ -46,7 +46,7 @@ heapfile = NULL;
 
   if (status != OK){
      delete heapFile;
-heapfile = NULL;
+heapFile= NULL;
      delete heapFileScan;
 heapFileScan = NULL;
      return status;
@@ -65,7 +65,7 @@ heapFileScan = NULL;
      if (status != OK){ // this means there wasn't a next record to grab
         heapFileScan->endScan();
         delete heapFile;
-heapfile = NULL;
+heapFile= NULL;
         delete heapFileScan;
 heapFileScan = NULL;
         return OK;
@@ -84,7 +84,7 @@ heapFileScan = NULL;
      heapFile->insertRecord(resultRecord, resultRID);
      if (status != OK){ // this means there was an issue inserting the record
         delete heapFile;
-heapfile = NULL;
+heapFile= NULL;
         delete heapFileScan;
 heapFileScan = NULL;
         return status;

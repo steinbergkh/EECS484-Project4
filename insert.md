@@ -62,8 +62,8 @@ At this point, you have all the information to
 
 ####Insert the record into the heapfile
 - Once the record is created, call insertRecord on the ehapfile for the relation
-- FIRST, the constructor for the "relation" heapfile needs to be called
-   - creates a heapfile if one doesn't exist
+- FIRST, the constructor for the "relation" heapFileneeds to be called
+   - creates a heapFileif one doesn't exist
    - if one exists, it opens the heapfile
 - THEN, the record you created needs to be inserted
 - This returns a Record ID
