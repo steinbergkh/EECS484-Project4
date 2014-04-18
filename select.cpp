@@ -69,6 +69,5 @@ Status Operators::Select(const string & result,      // name of the output relat
       return status;
    }
 
-   delete[] resultAttrDesc;
    return OK;
 }

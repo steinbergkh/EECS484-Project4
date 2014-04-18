@@ -139,6 +139,7 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
       // if error, delete allocated HeapFile and return the error status
       if(status != OK){
          delete heapFile;
+heapfile = NULL;
          return status;
       }
       RID recordID;
@@ -146,9 +147,11 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
       status = heapFile->insertRecord(record, recordID);
       if(status != OK){
          delete heapFile;
+heapfile = NULL;
          return status;
       }
       delete heapFile;
+heapfile = NULL;
 
       // RECORD ID NEEDS TO BE INSERTED IN EACH INDEX FOR THE RELATION
       // 1. check catalogs to see if there is one or more indexes for the relation

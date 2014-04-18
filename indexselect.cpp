@@ -25,7 +25,9 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
 
   if (status != OK){
      delete heapFile;
+     heapfile = NULL;
      delete heapFileScan;
+     heapFileScan = NULL;
      return status;
   }
 
@@ -40,7 +42,9 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
 
    if (status != OK){
       delete heapFile;
+      heapFile = NULL;
       delete heapFileScan;
+      heapFileScan = NULL;
       return status;
    }
    // this func is only called if there is an index on the relation "indexRelName"
@@ -63,7 +67,9 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
 
       if (status != OK){ // this means there wasn't a next record to grab
          delete heapFile;
+         heapFile = NULL;
          delete heapFileScan;
+         heapFileScan = NULL;
          attrIndex->endScan();
          return OK;
       }
@@ -84,7 +90,9 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
       heapFile->insertRecord(resultRecord, resultRID);
       if (status != OK){ // this means there was an issue
          delete heapFile;
+         heapFile = NULL;
          delete heapFileScan;
+         heapFileScan = NULL;
          return status;
       }
    }

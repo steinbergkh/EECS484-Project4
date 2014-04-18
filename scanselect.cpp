@@ -24,6 +24,7 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
 
   if (status != OK){
      delete heapFile;
+heapfile = NULL;
      return status;
   }
 
@@ -45,7 +46,9 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
 
   if (status != OK){
      delete heapFile;
+heapfile = NULL;
      delete heapFileScan;
+heapFileScan = NULL;
      return status;
   }
 
@@ -62,7 +65,9 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
      if (status != OK){ // this means there wasn't a next record to grab
         heapFileScan->endScan();
         delete heapFile;
+heapfile = NULL;
         delete heapFileScan;
+heapFileScan = NULL;
         return OK;
      }
      resultRecord.data = malloc(reclen); // allocate enough room for all our shtuff
@@ -79,7 +84,9 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
      heapFile->insertRecord(resultRecord, resultRID);
      if (status != OK){ // this means there was an issue inserting the record
         delete heapFile;
+heapfile = NULL;
         delete heapFileScan;
+heapFileScan = NULL;
         return status;
      }
   }
