@@ -2,6 +2,8 @@
 #include "query.h"
 #include "sort.h"
 #include "index.h"
+#include "string.h"
+#include "stdlib.h"
 
 /*
 * Indexed nested loop evaluates joins with an index on the
