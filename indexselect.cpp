@@ -56,7 +56,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
          return OK;
       }
 
-      heapFileScan->getRandomRecord(nextRID, resultRecord);
+      heapFileScan->getRandomRecord(nextRID, nextRecord);
 
       resultRecord.data = malloc(reclen); // allocate enough room for all our shtuff
 
