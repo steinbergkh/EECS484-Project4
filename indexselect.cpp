@@ -15,7 +15,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
   cout << "Algorithm: Index Select" << endl;
 
   /* Your solution goes here */
-  Status status;
+  /*Status status;
 
   HeapFile *heapFile = new HeapFile(result, status);
   Datatype projAttrType = (Datatype)attrDesc->attrType;
@@ -95,7 +95,7 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
          heapFileScan = NULL;
          return status;
       }
-   }
+   }*/
 
    return OK;
 }
