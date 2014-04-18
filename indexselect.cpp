@@ -41,7 +41,6 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
    if (status != OK){
       delete heapFile;
       delete heapFileScan;
-      delete attrIndex;
       return status;
    }
    // this func is only called if there is an index on the relation "indexRelName"
@@ -65,7 +64,6 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
       if (status != OK){ // this means there wasn't a next record to grab
          delete heapFile;
          delete heapFileScan;
-         delete attrIndex;
          attrIndex->endScan();
          return OK;
       }
