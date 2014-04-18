@@ -12,10 +12,20 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
   cout << "Algorithm: Index Select" << endl;
 
   /* Your solution goes here */
-  Datatype indexDatatype = Datatype(attrDesc->attrType); // static cast attrType
-                                                         // from int to Datatype
-  string indexRelName = attrDesc->relName;
   Status status;
+
+  HeapFile *heapFile = new HeapFile(result, status);
+  Datatype projAttrType = (Datatype)attrDesc->attrType;
+  char *projAttrVal = (char*)attrValue;  //do we have to static cast this?
+  HeapFileScan *heapFileScan = new HeapFileScan(attrDesc->relName, attrDesc->attrOffset, attrDesc->attrLen,
+                                  projAttrType, projAttrVal, op, status);
+
+  if (status != OK){
+     return status;
+  }
+
+  Datatype indexDatatype = Datatype(attrDesc->attrType); // static cast attrType                                                      // from int to Datatype
+  string indexRelName = attrDesc->relName;
   Index *attrIndex = new Index(indexRelName,    // name of the relation being indexed
                         attrDesc->attrOffset,   // offset of the attribute being indexed
                         attrDesc->attrLen,      // length of the attribute being indexed
@@ -23,11 +33,44 @@ Status Operators::IndexSelect(const string& result,       // Name of the output 
                         0,                      // =1 if the index should only allow unique entries.
                         status);        // return error codes
 
+   if (status != OK){
+      return status;
+   }
    // this func is only called if there is an index on the relation "indexRelName"
    // which means the constructor should find the file and put the header page
    // into the buffer poo
 
+   RID nextRID, resultRID;
+   Record nextRecord, resultRecord;
+   int resultRecOffset;
 
+   while(true){
+      // grab the next record
+      status = attrIndex->scanNext(nextRID);
 
-  return OK;
+      if (status != OK){ // this means there wasn't a next record to grab
+         attrIndex->endScan();
+         return OK;
+      }
+
+      heapFileScan->getRandomRecord(nextRID, resultRecord);
+
+      resultRecord.data = malloc(reclen); // allocate enough room for all our shtuff
+
+      resultRecOffset = 0;
+      for (int i = 0; i < projCnt ; ++i){
+         memcpy(resultRecord.data + resultRecOffset, // should point to end of last attr in new record
+               nextRecord.data + projNames[i].attrOffset,
+               projNames[i].attrLen);
+         resultRecOffset += projNames[i].attrLen;
+      }
+      resultRecord.length = resultRecOffset; // should be equal to the val of
+                                            // the last offset plus it's length
+      heapFile->insertRecord(resultRecord, resultRID);
+      if (status != OK){ // this means there was an issue
+         return OK;
+      }
+   }
+
+   return OK;
 }
