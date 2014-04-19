@@ -125,13 +125,3 @@ int Operators::matchRec(const Record& outerRec,    // Left record
 
    return 0;
 }
-
-bool Operators::streq( const char * str1, const char * str2 ){
-   int retVal = strcmp(str1, str2);
-   if (retVal == 0){
-      return true;
-   }
-   else{
-      return false;
-   }
-}

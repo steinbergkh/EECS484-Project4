@@ -142,7 +142,7 @@ Status Operators::INL(const string& result,           // Name of the output rela
 
          resultRecOffset = 0;
          for (int i = 0; i < projCnt ; ++i){
-            if (Operators::streq(attrDescArray[i].relName, attrDesc1.relName)){
+            if (streq(attrDescArray[i].relName, attrDesc1.relName)){
                // this attr in result record comes from relation of the left attr
                memcpy(resultRecord.data + resultRecOffset, // should point to end of last attr in new record
                         leftRecord.data + attrDescArray[i].attrOffset,

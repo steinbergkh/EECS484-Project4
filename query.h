@@ -20,11 +20,11 @@ public:
   static Status Select(const string & result,      // name of the output relation
 	               const int projCnt,          // number of attributes in the projection
 		       const attrInfo projNames[], // the list of projection attributes
-		       const attrInfo *attr,       // attribute used inthe selection predicate 
+		       const attrInfo *attr,       // attribute used inthe selection predicate
 #ifdef BTREE_INDEX
-		       const Operator op, 
+		       const Operator op,
 		       const void *attrValue,
-		       const Operator op2 = NOTSET, 
+		       const Operator op2 = NOTSET,
 		       const void *attrValue2 = 0);
 #else // hash index only
 		       const Operator op,         // predicate operation
@@ -32,15 +32,24 @@ public:
 #endif // BTREE_INDEX
 
    // The join operator
-   static Status Join(const string & result,      // name of the output relation 
+   static Status Join(const string & result,      // name of the output relation
                       const int projCnt,          // number of attributes in the projection
 	              const attrInfo projNames[], // the list of projection attributes
 	              const attrInfo *attr1,      // left attr in the join predicate
-	              const Operator op,          // the predicate operation 
+	              const Operator op,          // the predicate operation
 	              const attrInfo *attr2);     // right attr in the join predicate
 
+   static bool streq( const char * str1, const char * str2 ){
+      int retVal = strcmp(str1, str2);
+      if (retVal == 0){
+         return true;
+      }
+      else{
+         return false;
+      }
+   }
 
-private: 
+private:
 
    // A simple scan select using a heap file scan
    static Status ScanSelect(const string & result,      // name of the output relation
@@ -64,8 +73,8 @@ private:
 #endif // BTREE_INDEX
                              const int reclen);          // length of a tuple in the result relation
 
-   // Function to match two record based on the predicate. Returns 0 if the two attributes 
-   // are equal, a negative number if the left (attrDesc1) attribute is less that the right 
+   // Function to match two record based on the predicate. Returns 0 if the two attributes
+   // are equal, a negative number if the left (attrDesc1) attribute is less that the right
    // attribute, otherwise this function returns a positive number.
    static int matchRec(const Record & outerRec,     // Left record
                        const Record & innerRec,     // Right record
@@ -99,6 +108,7 @@ private:
                      const Operator op,              // The join operation
                      const AttrDesc & attrDesc2,     // The left attribute in the join predicate
                      const int reclen);              // The lenght of a tuple in the result relation
+
 };
 
 
@@ -117,7 +127,7 @@ public:
 		        const Operator op,          // the predicate operation
 		        const Datatype type,        // the predicate type
 		        const void *attrValue);     // the literal used in the predicate
-}; 
+};
 
 
 
