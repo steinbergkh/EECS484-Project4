@@ -3,6 +3,7 @@
 
 #include "heapfile.h"
 #include "index.h"
+#include "string.h"
 
 //
 // Prototypes for query layer functions
