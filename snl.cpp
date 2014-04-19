@@ -77,9 +77,9 @@ Status Operators::SNL(const string& result,           // Output relation name
      memcpy(indexAttrVal, leftRecVal, attrDesc1.attrLen);
 
      HeapFileScan *rightFileScan = new HeapFileScan(rightRelName,
-                                                    attrDesc1.attrOffset,
-                                                    attrDesc1.attrLen,
-                                                    attrType1,
+                                                    attrDesc2.attrOffset,
+                                                    attrDesc2.attrLen,
+                                                    attrType2,
                                                     leftRecVal,
                                                     op,
                                                     status);
@@ -102,7 +102,7 @@ Status Operators::SNL(const string& result,           // Output relation name
         status = rightFileScan->scanNext(rightRID, rightRecord);
 
         if (status != OK){ // this means there wasn't a next record in this index to grab
-           attrIndex->endScan();
+           rightFileScan->endScan();
            delete rightFileScan;
            rightFileScan = NULL;
            break;
@@ -112,7 +112,7 @@ Status Operators::SNL(const string& result,           // Output relation name
 
 
         if (status != OK){ // this means there wasn't a record to grab
-           attrIndex->endScan();
+           rightFileScan->endScan();
            free(resultRecord.data);
            delete heapFile;
            heapFile = NULL;
@@ -145,7 +145,7 @@ Status Operators::SNL(const string& result,           // Output relation name
 
         heapFile->insertRecord(resultRecord, resultRID);
         if (status != OK){ // this means there was an issue
-           attrIndex->endScan();
+           rightFileScan->endScan();
            free(resultRecord.data);
            delete heapFile;
            heapFile = NULL;
