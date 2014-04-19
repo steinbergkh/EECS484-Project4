@@ -4,6 +4,19 @@
 #include "index.h"
 #include "string.h"
 #include "stdlib.h"
+#include <stdio.h>
+
+
+bool streq( const char * str1, const char * str2 ){
+   int retVal = strcmp(str1, str2);
+   if (retVal == 0){
+      return true;
+   }
+   else{
+      return false;
+   }
+}
+
 
 /*
 * Indexed nested loop evaluates joins with an index on the
@@ -100,7 +113,8 @@ Status Operators::INL(const string& result,           // Name of the output rela
           -------------------------------------------  */
 
       void *indexAttrVal = malloc(attrDesc1.attrLen);
-      strcpy((char *)indexAttrVal, ((char *)leftRecord.data + attrDesc1.attrOffset));
+      cout << "attempting to copy mem into temp var for index search" << endl;
+      memcpy(indexAttrVal, leftRecord.data + attrDesc1.attrOffset, attrDesc1.attrLen);
 
       HeapFileScan *heapFileScan2 = new HeapFileScan(attrDesc2.relName,
                                                  attrDesc2.attrOffset,
@@ -149,13 +163,15 @@ Status Operators::INL(const string& result,           // Name of the output rela
 
          resultRecOffset = 0;
          for (int i = 0; i < projCnt ; ++i){
-            if (attrDescArray[i].relName == attrDesc1.relName){
+            if (streq(attrDescArray[i].relName, attrDesc1.relName)){
+               cout << "attempting to copy mem into result record from LEFT attr" << endl;
                // this attr in result record comes from relation of the left attr
                memcpy(resultRecord.data + resultRecOffset, // should point to end of last attr in new record
                         leftRecord.data + attrDescArray[i].attrOffset,
                         attrDescArray[i].attrLen);
             }
             else{ // this attr in result record comes from relation of the right attr
+               cout << "attempting to copy mem into result record from RIGHT attr" << endl;
                memcpy(resultRecord.data + resultRecOffset, // should point to end of last attr in new record
                         rightRecord.data + attrDescArray[i].attrOffset,
                         attrDescArray[i].attrLen);
