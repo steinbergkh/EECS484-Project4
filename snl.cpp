@@ -6,19 +6,6 @@
 #include "stdlib.h"
 #include <stdio.h>
 
-
-// I hate the strcmp function more than anything
-// WHY DOES IT RETURN A 0 WHEN TWO STRINGS ARE EQUAL!?!?!?
-bool streq( const char * str1, const char * str2 ){
-   int retVal = strcmp(str1, str2);
-   if (retVal == 0){
-      return true;
-   }
-   else{
-      return false;
-   }
-}
-
 Status Operators::SNL(const string& result,           // Output relation name
                       const int projCnt,              // Number of attributes in the projection
                       const AttrDesc attrDescArray[], // Projection list (as AttrDesc)
@@ -142,7 +129,7 @@ Status Operators::SNL(const string& result,           // Output relation name
 
         resultRecOffset = 0;
         for (int i = 0; i < projCnt ; ++i){
-           if (streq(attrDescArray[i].relName, attrDesc1.relName)){
+           if (Operators::streq(attrDescArray[i].relName, attrDesc1.relName)){
               // this attr in result record comes from relation of the left attr
               memcpy(resultRecord.data + resultRecOffset, // should point to end of last attr in new record
                        leftRecord.data + attrDescArray[i].attrOffset,
