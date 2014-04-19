@@ -34,7 +34,6 @@ Status Operators::INL(const string& result,           // Name of the output rela
                      const int reclen)               // Length of a tuple in the output relation
 {
    cout << "Algorithm: Indexed NL Join" << endl;
-   cout << "reclen = " << reclen << endl;
    /* Your solution goes here */
 
    Status status;
@@ -159,7 +158,6 @@ Status Operators::INL(const string& result,           // Name of the output rela
          resultRecOffset = 0;
          for (int i = 0; i < projCnt ; ++i){
             if (streq(attrDescArray[i].relName, attrDesc1.relName)){
-               cout << "attempting to copy mem into result record from LEFT attr" << endl;
                // this attr in result record comes from relation of the left attr
                memcpy(resultRecord.data + resultRecOffset, // should point to end of last attr in new record
                         leftRecord.data + attrDescArray[i].attrOffset,

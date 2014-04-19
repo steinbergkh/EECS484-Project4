@@ -39,8 +39,6 @@ Status Operators::Join(const string& result,        // Name of the output relati
          delete [] projAttrDesc;
          return status;
       }
-      cout << "recordLength = " << recordLength << endl;
-      cout << "projAttrDesc[i].attrLen = " << projAttrDesc[i].attrLen << endl;
       recordLength += projAttrDesc[i].attrLen;
    }
    status = attrCat->getInfo(attr1->relName,
