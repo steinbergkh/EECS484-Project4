@@ -173,7 +173,7 @@ Status Operators::INL(const string& result,           // Name of the output rela
             else{ // this attr in result record comes from relation of the right attr
                cout << "attempting to copy mem into result record from RIGHT attr" << endl;
                cout << "(char*)rightRecord.data" << (char*)rightRecord.data << endl;
-               cout << "(char*)(rightRecord.data + attrDescArray[i].attrOffset)" << *(rightRecord.data + attrDescArray[i].attrOffset) << endl;
+               cout << "(char*)(rightRecord.data + attrDescArray[i].attrOffset)" << (char*)(rightRecord.data + attrDescArray[i].attrOffset) << endl;
                memcpy(resultRecord.data + resultRecOffset, // should point to end of prev attr in new record
                         rightRecord.data + attrDescArray[i].attrOffset,
                         attrDescArray[i].attrLen);
