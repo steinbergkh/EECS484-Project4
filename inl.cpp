@@ -115,7 +115,6 @@ Status Operators::INL(const string& result,           // Name of the output rela
       void *indexAttrVal = malloc(attrDesc1.attrLen);
       cout << "attempting to copy mem into temp var for index search" << endl;
       memcpy(indexAttrVal, leftRecord.data + attrDesc1.attrOffset, attrDesc1.attrLen);
-      cout << "\t index search on record " <<
 
       HeapFileScan *heapFileScan2 = new HeapFileScan(attrDesc2.relName,
                                                  attrDesc2.attrOffset,
