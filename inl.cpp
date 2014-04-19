@@ -62,10 +62,6 @@ Status Operators::INL(const string& result,           // Name of the output rela
       return status;
    }
 
-
-
-
-
    Index *attrIndex = new Index(rightRelName,        // name of the relation being indexed
                               attrDesc2.attrOffset, // offset of the attribute being indexed
                               attrDesc2.attrLen,    // length of the attribute being indexed
