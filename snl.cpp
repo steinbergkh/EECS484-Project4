@@ -2,6 +2,9 @@
 #include "query.h"
 #include "sort.h"
 #include "index.h"
+#include "string.h"
+#include "stdlib.h"
+#include <stdio.h>
 
 Status Operators::SNL(const string& result,           // Output relation name
                       const int projCnt,              // Number of attributes in the projection
