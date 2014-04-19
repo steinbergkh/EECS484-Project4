@@ -34,7 +34,7 @@ Status Operators::INL(const string& result,           // Name of the output rela
                      const int reclen)               // Length of a tuple in the output relation
 {
    cout << "Algorithm: Indexed NL Join" << endl;
-
+   cout << "reclen = " << reclen << endl;
    /* Your solution goes here */
 
    Status status;
@@ -115,6 +115,7 @@ Status Operators::INL(const string& result,           // Name of the output rela
       void *indexAttrVal = malloc(attrDesc1.attrLen);
       cout << "attempting to copy mem into temp var for index search" << endl;
       memcpy(indexAttrVal, leftRecord.data + attrDesc1.attrOffset, attrDesc1.attrLen);
+      cout << "\t index search on record " <<
 
       HeapFileScan *heapFileScan2 = new HeapFileScan(attrDesc2.relName,
                                                  attrDesc2.attrOffset,
@@ -172,7 +173,9 @@ Status Operators::INL(const string& result,           // Name of the output rela
             }
             else{ // this attr in result record comes from relation of the right attr
                cout << "attempting to copy mem into result record from RIGHT attr" << endl;
-               memcpy(resultRecord.data + resultRecOffset, // should point to end of last attr in new record
+               cout << "(char*)rightRecord.data" << (char*)rightRecord.data << endl;
+               cout << "(char*)(rightRecord.data + attrDescArray[i].attrOffset)" << *(rightRecord.data + attrDescArray[i].attrOffset) << endl;
+               memcpy(resultRecord.data + resultRecOffset, // should point to end of prev attr in new record
                         rightRecord.data + attrDescArray[i].attrOffset,
                         attrDescArray[i].attrLen);
             }
