@@ -112,24 +112,19 @@ Status Operators::INL(const string& result,           // Name of the output rela
           ------   INDEX SCAN ON RIGHT ATTR    ------
           -------------------------------------------  */
 
-      void *indexAttrVal = malloc(attrDesc1.attrLen);
-      cout << "attempting to copy mem into temp var for index search" << endl;
-      memcpy(indexAttrVal, leftRecord.data + attrDesc1.attrOffset, attrDesc1.attrLen);
+      char *indexAttrVal = new char[attrDesc1.attrLen];
+      char *leftRecVal = ((char*)leftRecord.data) + attrDesc1.attrOffset;
+      memcpy(indexAttrVal, leftRecVal, attrDesc1.attrLen);
 
-      HeapFileScan *heapFileScan2 = new HeapFileScan(attrDesc2.relName,
-                                                 attrDesc2.attrOffset,
-                                                 attrDesc2.attrLen,
-                                                 attrType2,
-                                                 (char *)indexAttrVal,
-                                                 op,
-                                                 status);
+      HeapFileScan *rightFileScan = new HeapFileScan(attrDesc2.relName, status);
+
 
       // start index scan for char* indexAttrVal; = (char *)leftRecord.data + attrDesc1.attrOffset
       status = attrIndex->startScan(indexAttrVal);
       if (status != OK){ // this means there weren't any records matching this
          attrIndex->endScan();
-         delete heapFileScan2;
-         heapFileScan2 = NULL;
+         delete rightFileScan;
+         rightFileScan = NULL;
          return OK;
       }
       // breaks when it's done finding all the records on the left
@@ -140,20 +135,20 @@ Status Operators::INL(const string& result,           // Name of the output rela
 
          if (status != OK){ // this means there wasn't a next record in this index to grab
             attrIndex->endScan();
-            delete heapFileScan2;
-            heapFileScan2 = NULL;
+            delete rightFileScan;
+            rightFileScan = NULL;
             break;
          }
 
-         heapFileScan2->getRandomRecord(rightRID, rightRecord);
+         rightFileScan->getRandomRecord(rightRID, rightRecord);
 
          if (status != OK){ // this means there wasn't a record to grab
             attrIndex->endScan();
             free(resultRecord.data);
             delete heapFile;
             heapFile = NULL;
-            delete heapFileScan2;
-            heapFileScan2 = NULL;
+            delete rightFileScan;
+            rightFileScan = NULL;
             delete leftFileScan;
             leftFileScan = NULL;
             return OK;
@@ -171,9 +166,6 @@ Status Operators::INL(const string& result,           // Name of the output rela
                         attrDescArray[i].attrLen);
             }
             else{ // this attr in result record comes from relation of the right attr
-               cout << "attempting to copy mem into result record from RIGHT attr" << endl;
-               cout << "(char*)rightRecord.data" << (char*)rightRecord.data << endl;
-               cout << "(char*)(rightRecord.data + attrDescArray[i].attrOffset)" << (char*)(rightRecord.data + attrDescArray[i].attrOffset) << endl;
                memcpy(resultRecord.data + resultRecOffset, // should point to end of prev attr in new record
                         rightRecord.data + attrDescArray[i].attrOffset,
                         attrDescArray[i].attrLen);
@@ -192,8 +184,8 @@ Status Operators::INL(const string& result,           // Name of the output rela
             heapFile = NULL;
             delete leftFileScan;
             leftFileScan = NULL;
-            delete heapFileScan2;
-            heapFileScan2 = NULL;
+            delete rightFileScan;
+            rightFileScan = NULL;
             return status;
          }
       }
