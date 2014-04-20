@@ -83,7 +83,8 @@ Status Operators::Join(const string& result,        // Name of the output relati
       }
    }
    else{ // gotta use SIMPLE NESTED LOOP JOIN
-      status = SNL(result, projCnt, projAttrDesc, leftAttrDesc, op, rightAttrDesc, recordLength);
+      // oops mixed these up in snl.cpp so I just switched them here tee hee
+      status = SNL(result, projCnt, projAttrDesc, rightAttrDesc, op, leftAttrDesc, recordLength);
    }
 
    if (status != OK){
