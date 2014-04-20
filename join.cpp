@@ -26,9 +26,6 @@ Status Operators::Join(const string& result,        // Name of the output relati
    /* Your solution goes here */
    Status status;
 
-   Utilities::Print(attr1->relName);
-   Utilities::Print(attr2->relName);
-
    AttrDesc* projAttrDesc = new AttrDesc[projCnt];
    AttrDesc leftAttrDesc, rightAttrDesc;
    int recordLength = 0;
