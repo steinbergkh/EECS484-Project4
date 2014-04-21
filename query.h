@@ -86,7 +86,7 @@ private:
                        const AttrDesc & attrDesc2); // Right attribute in the predicate
 
    // returns a MatchRecType of the int from matchRec so we can switch dat case
-  MatchRecType Operators::matchRecCompare(const Record& outerRec,    // Left record
+  MatchRecType matchRecCompare(const Record& outerRec,    // Left record
                              const Record& innerRec,    // Right record
                              const AttrDesc& attrDesc1, // Left attribute in the predicate
                              const AttrDesc& attrDesc2); // Right attribute in the predicate
