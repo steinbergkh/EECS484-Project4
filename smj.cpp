@@ -178,6 +178,9 @@ Status Operators::SMJ(const string& result,             // Output relation name
       switch(recCompare){
          case LEFTLTRIGHT: // left is smaller, increment left
             leftStatus = leftAttrSortedFile->next(leftRecord);
+            if (leftStatus == FILEEOF){
+               break;
+            }
             if (leftStatus != OK){ // any issues?
                delete heapFile;
                heapFile= NULL;
@@ -207,6 +210,9 @@ Status Operators::SMJ(const string& result,             // Output relation name
             break;
          case RIGHTLTLEFT: // right is smaller, increment right
             rightStatus = rightAttrSortedFile->next(rightRecord);
+            if (rightStatus == FILEEOF){
+               break;
+            }
             if (rightStatus != OK){ // any issues?
                delete heapFile;
                heapFile= NULL;
@@ -268,6 +274,9 @@ Status Operators::SMJ(const string& result,             // Output relation name
                }
                // let's look through that
                rightStatus = rightAttrSortedFile->next(rightRecord);
+               if (rightStatus == FILEEOF){
+                  break;
+               }
                if (rightStatus != OK){
                   delete heapFile;
                   heapFile= NULL;
