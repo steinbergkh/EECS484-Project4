@@ -89,7 +89,7 @@ private:
   MatchRecType Operators::matchRecCompare(const Record& outerRec,    // Left record
                              const Record& innerRec,    // Right record
                              const AttrDesc& attrDesc1, // Left attribute in the predicate
-                             const AttrDesc& attrDesc2) // Right attribute in the predicate
+                             const AttrDesc& attrDesc2); // Right attribute in the predicate
 
    // The various join algorithms are declared below.
    // Simple nested loops
