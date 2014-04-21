@@ -172,7 +172,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
 
    MatchRecType recCompare;
    bool markSet = false;
-
+   int resultRecOffset = 0;
    while(true){
 
       recCompare = matchRecCompare(leftRecord, rightRecord, attrDesc1, attrDesc2);
@@ -226,7 +226,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
             // AND IT'S LEGIT! insert record!
             resultRecord.data = malloc(reclen); // allocate enough room for all our shtuff
 
-            int resultRecOffset = 0;
+            resultRecOffset = 0;
             for (int i = 0; i < projCnt ; ++i){
                if (streq(attrDescArray[i].relName, attrDesc1.relName)){
                   // this attr in result record comes from relation of the left attr
