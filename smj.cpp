@@ -6,9 +6,7 @@
 #include "stdlib.h"
 #include <stdio.h>
 
-enum MatchRecType {LEFTLTRIGHT = 0, RIGHTLTLEFT = 1, EQUAL = 2};
-
-MatchRecType matchRecCompare(const Record& outerRec,    // Left record
+MatchRecType Operators::matchRecCompare(const Record& outerRec,    // Left record
                            const Record& innerRec,    // Right record
                            const AttrDesc& attrDesc1, // Left attribute in the predicate
                            const AttrDesc& attrDesc2) // Right attribute in the predicate

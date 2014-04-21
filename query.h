@@ -5,6 +5,9 @@
 #include "index.h"
 #include "string.h"
 
+enum MatchRecType {LEFTLTRIGHT = 0, RIGHTLTLEFT = 1, EQUAL = 2};
+
+
 //
 // Prototypes for query layer functions
 //
@@ -81,6 +84,12 @@ private:
                        const Record & innerRec,     // Right record
                        const AttrDesc & attrDesc1,  // Left attribute in the predicate
                        const AttrDesc & attrDesc2); // Right attribute in the predicate
+
+   // returns a MatchRecType of the int from matchRec so we can switch dat case
+  MatchRecType Operators::matchRecCompare(const Record& outerRec,    // Left record
+                             const Record& innerRec,    // Right record
+                             const AttrDesc& attrDesc1, // Left attribute in the predicate
+                             const AttrDesc& attrDesc2) // Right attribute in the predicate
 
    // The various join algorithms are declared below.
    // Simple nested loops
