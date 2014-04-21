@@ -4,6 +4,7 @@
 #include "index.h"
 #include "string.h"
 #include "stdlib.h"
+#include "error.h"
 #include <stdio.h>
 
 MatchRecType Operators::matchRecCompare(const Record& outerRec,    // Left record
@@ -58,7 +59,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
    // how many of them can fit on a page
    // consult the system catalogs and determine the size of the tuples (in # of bytes)
    int leftAttrCnt, rightAttrCnt;
-   int leftAttrLen = rightAttrLen = 0;
+   int leftAttrLen = 0, rightAttrLen = 0;
 
    AttrDesc* leftAttrDesc;
    AttrDesc* rightAttrDesc;
@@ -141,7 +142,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
    // save a little room for the data
    // won't you save a little
    // save a little for meeeeeeeee ohhhh
-   resultRecord.data = malloc(recLen);
+   resultRecord.data = malloc(reclen);
 
    Status leftStatus = leftAttrSortedFile->next(leftRecord);
 
@@ -177,7 +178,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
       recCompare = matchRecCompare(leftRecord, rightRecord, attrDesc1, attrDesc2);
 
       switch(recCompare){
-         case: LEFTLTRIGHT: // left is smaller, increment left
+         case LEFTLTRIGHT: // left is smaller, increment left
             leftStatus = leftAttrSortedFile->next(leftRecord);
             if (leftStatus != OK){ // any issues?
                delete heapFile;
@@ -208,7 +209,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
             } // end remove mark
 
             break;
-         case: RIGHTLTLEFT: // right is smaller, increment right
+         case RIGHTLTLEFT: // right is smaller, increment right
             rightStatus = rightAttrSortedFile->next(rightRecord);
             if (rightStatus != OK){ // any issues?
                delete heapFile;
@@ -225,7 +226,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
             // AND IT'S LEGIT! insert record!
             resultRecord.data = malloc(reclen); // allocate enough room for all our shtuff
 
-            resultRecOffset = 0;
+            int resultRecOffset = 0;
             for (int i = 0; i < projCnt ; ++i){
                if (streq(attrDescArray[i].relName, attrDesc1.relName)){
                   // this attr in result record comes from relation of the left attr
@@ -296,7 +297,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
             delete rightAttrSortedFile;
             rightAttrSortedFile = NULL;
             free(resultRecord.data);
-            return NONMATCHINGATTR;
+            return ATTRTYPEMISMATCH;
             break;
       }
 
