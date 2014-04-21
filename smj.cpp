@@ -153,7 +153,6 @@ Status Operators::SMJ(const string& result,             // Output relation name
       leftAttrSortedFile = NULL;
       delete rightAttrSortedFile;
       rightAttrSortedFile = NULL;
-      free(resultRecord.data);
       return leftStatus;
    }
 
@@ -166,7 +165,6 @@ Status Operators::SMJ(const string& result,             // Output relation name
       leftAttrSortedFile = NULL;
       delete rightAttrSortedFile;
       rightAttrSortedFile = NULL;
-      free(resultRecord.data);
       return rightStatus;
    }
 
@@ -187,7 +185,6 @@ Status Operators::SMJ(const string& result,             // Output relation name
                leftAttrSortedFile = NULL;
                delete rightAttrSortedFile;
                rightAttrSortedFile = NULL;
-               free(resultRecord.data);
                return leftStatus;
             }
             // now we check if there's a mark and go back to it
@@ -203,7 +200,6 @@ Status Operators::SMJ(const string& result,             // Output relation name
                   leftAttrSortedFile = NULL;
                   delete rightAttrSortedFile;
                   rightAttrSortedFile = NULL;
-                  free(resultRecord.data);
                   return rightStatus;
                }
             } // end remove mark
@@ -218,7 +214,6 @@ Status Operators::SMJ(const string& result,             // Output relation name
                leftAttrSortedFile = NULL;
                delete rightAttrSortedFile;
                rightAttrSortedFile = NULL;
-               free(resultRecord.data);
                return rightStatus;
             }
             break;
@@ -286,7 +281,6 @@ Status Operators::SMJ(const string& result,             // Output relation name
 
                markSet = true;
             }
-
             free(resultRecord.data);
             break;
          default: // matchRec issue?
