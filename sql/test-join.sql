@@ -57,6 +57,9 @@ INSERT INTO show(showid, name, network, rating)
 INSERT INTO show(showid, name, network, rating)
   VALUES (6, 'Community', 'NBC', 4.0);
 
+-- show that inserts worked
+SELECT * FROM stars;
+
 -- should give all stars and show ID
 -- equi-join, no index, should use SMJ
 SELECT stars.real_name, show.name FROM stars, show WHERE stars.showid = show.showid;
