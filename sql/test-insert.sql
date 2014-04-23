@@ -21,8 +21,8 @@ INSERT INTO stars(starid, real_name, plays, plays)
 INSERT INTO stars(real_name, showid, starid, plays)
   VALUES ('McHale, Joel', 3, 101, 'Jeff');
 
---insert with NULL value:
--- should produce error
-INSERT INTO stars(starid, real_name, plays, showid) VALUES (100, 'Ken Jeong', 'Chang', );
+INSERT INTO stars(starid, real_name, plays, showid) VALUES (100, 'Ken Jeong', 'Chang', 6);
+
+SELECT * FROM stars;
 
 DROP TABLE stars;
