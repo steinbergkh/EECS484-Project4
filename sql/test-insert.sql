@@ -21,11 +21,6 @@ INSERT INTO stars(starid, real_name, plays, plays)
 INSERT INTO stars (real_name, showid, starid, plays)
   VALUES ('McHale, Joel', 3, 101, 'Jeff');
 
--- insert with attributes invalid data:
--- should produce error
-INSERT INTO stars(starid, real_name, plays, showid)
-  VALUES (101, 'Jacob Jingleheimer Schmidt, John', 'Abed', 6);
-
 --insert with NULL value:
 -- should produce error
 INSERT INTO stars(starid, real_name, plays, showid) VALUES (100, 'Ken Jeong', 'Chang', );
