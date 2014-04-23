@@ -15,7 +15,7 @@ INSERT INTO stars(starid, real_name, plays, showid)
   VALUES (101, 'Brie, Alison', 'Annie', 6);
 
 -- insert with out of order attributes
-INSERT INTO stars (real_name, showid, starid, plays)
+INSERT INTO stars(real_name, showid, starid, plays)
   VALUES ('McHale, Joel', 6, 102, 'Jeff');
 
 -- insert with attributes in order:
