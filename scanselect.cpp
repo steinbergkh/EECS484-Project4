@@ -3,6 +3,7 @@
 #include "index.h"
 #include "string.h"
 #include "stdlib.h"
+#include <stdio.h>
 
 /*
  * A simple scan select using a heap file scan
@@ -30,6 +31,7 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
 
   HeapFileScan *heapFileScan;
   if(attrDesc){ //where clause exists -> gotta filter
+     cout << "clause exists, gotta filter" << endl;
     Datatype projAttrType = (Datatype)attrDesc->attrType;
     char *projAttrVal = (char*)attrValue;  //do we have to static cast this?
     heapFileScan = new HeapFileScan(attrDesc->relName, attrDesc->attrOffset, attrDesc->attrLen,
@@ -63,7 +65,6 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
      status = heapFileScan->scanNext(nextRID, nextRecord);
 
      if (status != OK){ // this means there wasn't a next record to grab
-        free(resultRecord.data);
         heapFileScan->endScan();
         delete heapFile;
         heapFile= NULL;
@@ -91,6 +92,7 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
         heapFileScan = NULL;
         return status;
      }
+     free(resultRecord.data);
   }
   return OK;
 }
