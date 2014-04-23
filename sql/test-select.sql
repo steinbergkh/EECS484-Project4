@@ -7,8 +7,12 @@ CREATE TABLE stars(starid integer, real_name char(20),
                    plays char(12), showid integer);
 
 -- insert with attributes in order:
-INSERT INTO stars(starid, real_name, plays, showid)
-  VALUES (100, 'Glover, Donald', 'Troy', 6);
+INSERT INTO stars(starid, real_name, plays, showid) VALUES (100, 'Glover, Donald', 'Troy', 6);
+
+INSERT INTO stars(starid, real_name, plays, showid) VALUES (98, 'Brie, Alison', 'Annie', 6);
+
+ -- insert with out of order attributes
+ INSERT INTO stars (real_name, showid, starid, plays) VALUES ('McHale, Joel', 6, 99, 'Jeff');
 
 -- select query hit
 SELECT stars.showid, stars.real_name FROM stars WHERE stars.starid = 100;
