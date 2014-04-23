@@ -56,27 +56,27 @@ INSERT INTO show(showid, name, network, rating)
 
 -- should give all stars and show ID
 -- equi-join, no index, should use SMJ
-SELECT stars.real_name, show.name FROM stars, show WHERE stars.showid == show.showid;
+SELECT stars.real_name, show.name FROM stars, show WHERE stars.showid = show.showid;
 
 CREATE INDEX stars (starid);
 
 -- index NOT ON ATTR1 OR ATTR2 so it should STILL use SMJ
-SELECT stars.real_name, show.name FROM stars, show WHERE stars.showid == show.showid;
+SELECT stars.real_name, show.name FROM stars, show WHERE stars.showid = show.showid;
 
 CREATE INDEX stars (showid);
 
 -- index on attr1, should use INL
-SELECT stars.real_name, show.name FROM stars, show WHERE stars.showid == show.showid;
+SELECT stars.real_name, show.name FROM stars, show WHERE stars.showid = show.showid;
 
 CREATE INDEX show (showid);
 
 -- index on attr1 and attr2, should STILL use INL
-SELECT stars.real_name, show.name FROM stars, show WHERE stars.showid == show.showid;
+SELECT stars.real_name, show.name FROM stars, show WHERE stars.showid = show.showid;
 
 DROP INDEX stars (showid);
 
 -- index on attr2, should STILL use INL
-SELECT stars.real_name, show.name FROM stars, show WHERE stars.showid == show.showid;
+SELECT stars.real_name, show.name FROM stars, show WHERE stars.showid = show.showid;
 
 DROP TABLE stars;
 DROP TABLE show;
