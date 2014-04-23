@@ -171,13 +171,16 @@ Status Operators::SMJ(const string& result,             // Output relation name
    MatchRecType recCompare;
    bool markSet = false;
    int resultRecOffset = 0;
+   int timesinloop = 0;
    while(true){
-
+      ++timesinloop;
+      cout << "while loop begin #"<< timesinloop << endl;
       recCompare = matchRecCompare(leftRecord, rightRecord, attrDesc1, attrDesc2);
 
       switch(recCompare){
          case LEFTLTRIGHT: // left is smaller, increment left
             leftStatus = leftAttrSortedFile->next(leftRecord);
+            cout << "case LEFTLTRIGHT" << endl;
             if (leftStatus != OK){ // any issues?
                delete heapFile;
                heapFile= NULL;
@@ -194,6 +197,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
             if(markSet){ // we set our mark on the right file
                // now take that mark off so we don't forget!
                markSet = false;
+               cout << "mark is set" << endl;
                // let's go back to the mark
                rightStatus = rightAttrSortedFile->gotoMark();
                if (rightStatus != OK){ // any issues?
@@ -210,7 +214,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
             break;
          case RIGHTLTLEFT: // right is smaller, increment right
             rightStatus = rightAttrSortedFile->next(rightRecord);
-
+            cout << "case RIGHTLTLEFT" << endl;
             if (rightStatus != OK){ // any issues?
                delete heapFile;
                heapFile= NULL;
@@ -248,7 +252,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
                                                    // the last offset plus it's length
 
             status = heapFile->insertRecord(resultRecord, resultRID);
-
+            cout << "case EQUAL" << endl;
             if (status != OK){
                delete heapFile;
                heapFile= NULL;
@@ -275,6 +279,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
                }
                // let's look through that
                rightStatus = rightAttrSortedFile->next(rightRecord);
+               cout << "looking through right record" << endl;
                if (rightStatus != OK){
                   delete heapFile;
                   heapFile= NULL;
