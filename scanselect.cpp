@@ -31,7 +31,7 @@ Status Operators::ScanSelect(const string& result,       // Name of the output r
 
   HeapFileScan *heapFileScan;
   if(attrDesc){ //where clause exists -> gotta filter
-     cout << "clause exists, gotta filter" << endl;
+     //cout << "clause exists, gotta filter" << endl;
     Datatype projAttrType = (Datatype)attrDesc->attrType;
     char *projAttrVal = (char*)attrValue;  //do we have to static cast this?
     heapFileScan = new HeapFileScan(attrDesc->relName, attrDesc->attrOffset, attrDesc->attrLen,

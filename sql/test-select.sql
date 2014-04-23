@@ -15,7 +15,7 @@ INSERT INTO stars(starid, real_name, plays, showid) VALUES (98, 'Brie, Alison', 
  INSERT INTO stars(real_name, showid, starid, plays) VALUES ('McHale, Joel', 6, 99, 'Jeff');
 
 -- select query hit
-SELECT stars.showid, stars.real_name FROM stars WHERE stars.starid = 100;
+SELECT stars.starid, stars.showid, stars.real_name FROM stars WHERE stars.starid = 100;
 
 -- unconditional select
 SELECT stars.showid, stars.real_name FROM stars;
@@ -24,7 +24,7 @@ SELECT stars.showid, stars.real_name FROM stars;
 SELECT * FROM stars WHERE stars.starid = 100;
 
 -- select query miss
-SELECT stars.showid, stars.real_name FROM stars WHERE stars.starid = 101;
+SELECT stars.starid, stars.showid, stars.real_name FROM stars WHERE stars.starid = 101;
 
 -- select query table does not exist
 SELECT * FROM starZ;
@@ -35,9 +35,9 @@ SELECT * FROM stars WHERE stars.starstatus = 100;
 CREATE INDEX stars (starid);
 
 -- select query with index on predicate, and test of equality, should call IndexSelect
-SELECT stars.showid, stars.real_name FROM stars WHERE stars.starid = 100;
+SELECT stars.starid, stars.showid, stars.real_name FROM stars WHERE stars.starid = 100;
 
 -- -- select query with index on predicate, but no equality test, should call HeapScan
-SELECT stars.showid, stars.real_name FROM stars WHERE stars.starid < 100;
+SELECT stars.starid, stars.showid, stars.real_name FROM stars WHERE stars.starid < 100;
 
 DROP TABLE stars;
