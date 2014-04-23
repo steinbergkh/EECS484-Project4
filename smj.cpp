@@ -296,6 +296,25 @@ Status Operators::SMJ(const string& result,             // Output relation name
 
                markSet = true;
             }
+            else{
+               leftStatus = leftAttrSortedFile->next(leftRecord);
+               cout << "looking through right record" << endl;
+               if (leftStatus != OK){
+                  delete heapFile;
+                  heapFile= NULL;
+                  delete leftAttrSortedFile;
+                  leftAttrSortedFile = NULL;
+                  delete rightAttrSortedFile;
+                  rightAttrSortedFile = NULL;
+                  free(resultRecord.data);
+                  if (leftStatus == FILEEOF){
+                     return OK;
+                  }
+                  else if (rightStatus == FILEEOF){
+                     return rightStatus;
+                  }
+               }
+            }
             free(resultRecord.data);
             break;
          default: // matchRec issue?
