@@ -298,7 +298,7 @@ Status Operators::SMJ(const string& result,             // Output relation name
             }
             else{
                leftStatus = leftAttrSortedFile->next(leftRecord);
-               cout << "looking through right record" << endl;
+               cout << "looking through left record" << endl;
                if (leftStatus != OK){
                   delete heapFile;
                   heapFile= NULL;
@@ -309,9 +309,6 @@ Status Operators::SMJ(const string& result,             // Output relation name
                   free(resultRecord.data);
                   if (leftStatus == FILEEOF){
                      return OK;
-                  }
-                  else if (rightStatus == FILEEOF){
-                     return rightStatus;
                   }
                }
             }
