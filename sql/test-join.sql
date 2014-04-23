@@ -1,5 +1,8 @@
 ---------------------- JOIN TEST CASES ----------------------
 
+DROP TABLE stars;
+DROP TABLE show;
+
 -- create relations
 CREATE TABLE stars(starid integer, real_name char(20),
                    plays char(12), showid integer);
