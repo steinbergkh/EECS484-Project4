@@ -122,6 +122,11 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
                         attrList[i_insert].attrValue,
                         attrs[i_attribute].attrLen);
                }
+               if (status != OK){
+                  free(record.data);
+                  return status;
+               }
+
             }
          }
          // if bad things happened, we free the data previously allocated

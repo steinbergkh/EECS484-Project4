@@ -12,11 +12,7 @@ INSERT INTO stars(starid, real_name, plays, showid)
 INSERT INTO stars(starid, real_name, plays, plays, showid)
   VALUES (100, 'Glover, Donald', 'Troy', 'Troy', 6);
 
--- insert with more values than attributes:
-INSERT INTO stars(starid, real_name, plays, showid)
-  VALUES (100, 'Glover, Donald', 'Troy', 8, 6);
-
--- insert with duplicate attribute:
+-- insert with duplicate attribute/data type mismatch :
 INSERT INTO stars(starid, real_name, plays, plays)
   VALUES (100, 'Glover, Donald', 'Troy', 6);
 
