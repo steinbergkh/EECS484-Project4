@@ -47,12 +47,12 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
    // check if number of attributes is right
    // (true if either missing some or has duplicates)
    if (attributeCountTrue != attrCnt ){
-      cout << "attributeCountTrue == "<< attributeCountTrue << "attrCnt == " << attrCnt << endl;
+      //cout << "attributeCountTrue == "<< attributeCountTrue << "attrCnt == " << attrCnt << endl;
       if (attributeCountTrue > attrCnt){ // missing some
          status = ATTRTYPEMISMATCH;
       }
       else{ // duplicate
-         cout << "attribute count true is less than attribute counts entered" << endl;
+         //cout << "attribute count true is less than attribute counts entered" << endl;
          status = DUPLATTR;
       }
    }
@@ -103,7 +103,7 @@ const attrInfo attrList[])   // Value of attributes specified in INSERT statemen
                }
                else if (attrFound[i_attribute]){
                   // attribute was already matched with other attrInfo
-                  cout << "attribute was already matched with other attrInfo" << endl;
+                  //cout << "attribute was already matched with other attrInfo" << endl;
                   status = DUPLATTR;
                   break;
                }
