@@ -34,6 +34,6 @@ INSERT INTO stars(starid, real_name, plays, showid)
 --insert with NULL value:
 -- should produce error
 INSERT INTO stars(starid, real_name, plays, showid)
-  VALUES (100, 'Ken Jeong', 'Chang', NULL);
+  VALUES (100, 'Ken Jeong', 'Chang', );
 
 DROP TABLE stars;
