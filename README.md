@@ -2,16 +2,25 @@ EECS 484 -- Project 4
 ================
 ##Minirel 2000 Query Processor
 
-###Getting started on Project 4 - Piazza Note
-Given the feedback in office hour and Piazza, here're a couple of notes for project 4.
+###Introduction
+Implementing a query processor for a simple single-user DBMS that accepts a (small) subset of SQL.
 
-Project 4 is supposed to be a little bit more challenging compared to the previous ones, especially if you plan to do the extra credit. So don't be frustrated if you can't get it straight/can't figure out what to do after reading through spec and given code completely once or twice.
+###Framework Overview
+The following is a brief description of each of the main components.
 
-A couple of helpful notes to get you started:
-1. buffer at least an hour or two to sit down and read the spec & code given
-2. read through and understand what's in each file
-3. try to see how is each struct defined is linked to one another
-4. conceptually understand how each algorithm work before you implement them
-5. figure out a (pseudocode) plan for how to implement each function, and then just look up the struct/class/function interfaces you need. If you start writing code without a plan, it's likely that you'll start to look for information when you don't know what exactly you're looking for, and then you'll probably be lost.
+<dl>
+  <dt>Parser</dt>
+  <dd>The **minirel** executable accepts SQL queries and other utility commands. (See the next section for a full description of the supported SQL commands.) We provide a parser, which first parses the input SQL, and then consults the system catalogs to make sure the commands are valid (i.e., the relations and attributes mentioned by the command actually exist in the database.) If the SQL is valid, the parser calls the appropriate query operators and utilities. The parser is implemented for you.
+</dd>
 
-All the information you need is defined and given in the code. The spec covers all the project requirements, but may not explain every piece of code you need to know and may not be organized in your favorite way. But if you spend some time trying to understand how each class/file is organized, it shouldn't be hard to find the functions you need for your implementation.
+  <dt>Query Optimizer, Operators, and Utilities</dt>
+  <dd>If the incoming SQL command is valid, the parser calls the appropriate function to process the command:
+  * If the command is a utility, the parser calls the appropriate function to process the utility. For this project, you will only be implementing one utility (insert). The function header (Updates::Insert) can be found in the file query.h, and the actual implementation of this function will go in insert.cpp.
+  * If the command is a query, the parser first determines if the query is a select query (referencing just one table) or a join query. To execute a select query, the parser calls Operators::Select (in select.cpp). To execute a join query, it calls Operators::Join (in join.cpp). The Operator class definition can be found in query.h. </dd>
+
+  <dt>Storage Manager</dt>
+  <dd>Beneath the query processor, there are two main access methods for data: indexes and heapfiles. From the query processor, you will need to implement public methods. To understand these classes and methods, it should be sufficient to look at the header files (heapfile.h and index.h).</dd>
+  
+  <dt>System Catalogs</dt>
+  <dd>Recall that the system catalogs are used to store metadata (“data about the data”), including the names of all tables, and the names and types of all attributes. To understand the classes and methods, it should be sufficient to look at the header file (catalog.h).</dd>
+</dl>
